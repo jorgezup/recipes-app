@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import requestAPI from '../Redux/actions';
+import { requestAPI } from '../Redux/actions';
 
 class SearchHeader extends React.Component {
   state = {
