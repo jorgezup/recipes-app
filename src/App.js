@@ -12,12 +12,12 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route exact path="/foods" component={ Foods } />
-      <Route exact path="/drinks" component={ Drinks } />
-      <Route path="/foods/:id" component={ Foods } />
-      <Route path="/drinks/:id" component={ Foods } />
-      <Route path="/foods/:id/in-progress" component={ Foods } />
-      <Route path="/drinks/:id/in-progress" component={ Foods } />
+      <Route path="/drinks" component={ Drinks } />
+      <Route exact path="/foods/:id" component={ Foods } />
+      <Route exact path="/drinks/:id" component={ Foods } />
+      <Route exact path="/foods/:id/in-progress" component={ Foods } />
+      <Route exact path="/drinks/:id/in-progress" component={ Foods } />
+      <Route path="/foods" component={ Foods } />
       <Route exact path="/explore" component={ Explore } />
       <Route path="/explore/foods" component={ Explore } />
       <Route path="/explore/drinks" component={ Explore } />
