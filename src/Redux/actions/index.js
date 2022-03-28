@@ -1,9 +1,14 @@
+
+export const LOGIN = 'LOGIN';
+
+export const emailValidation = (email) => ({ type: LOGIN, email });
+
 const foodsAPI = (food) => ({
   type: 'FOOD',
   food,
 });
 
-const requestAPI = (searchRecipe, radio, exactLocation) => (dispatch) => {
+export const requestAPI = (searchRecipe, radio, exactLocation) => (dispatch) => {
   let url = '';
   if (exactLocation === '/foods') {
     if (radio === 'nameSearch') {
@@ -52,5 +57,3 @@ const requestAPI = (searchRecipe, radio, exactLocation) => (dispatch) => {
     );
   }
 };
-
-export default requestAPI;
