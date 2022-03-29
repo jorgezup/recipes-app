@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import { buttonSearchClicked } from '../Redux/actions';
 import Title from './Title';
 
 const Header = ({ title }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const {
     location: { pathname },
   } = history;
@@ -18,6 +21,10 @@ const Header = ({ title }) => {
   const handleSearchBtn = () => {
     setIsBtnClicked(!isBtnClicked);
   };
+
+  useEffect(() => {
+    dispatch(buttonSearchClicked(isBtnClicked));
+  }, [isBtnClicked]);
 
   useEffect(() => {
     const getLocation = () => {
