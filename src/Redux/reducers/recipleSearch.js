@@ -1,12 +1,12 @@
 const initialState = {};
 
-function foodsSearch(state = initialState, action) {
+function recipleSearch(state = initialState, action) {
   switch (action.type) {
-  case 'FOOD':
+  case 'SEARCH':
     return action.food;
   default:
     return state;
   }
 }
 
-export default foodsSearch;
+export default recipleSearch;
