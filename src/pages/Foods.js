@@ -9,11 +9,11 @@ class Foods extends React.Component {
     const { location } = this.props;
 
     return (
-      <main>
+      <section>
         <Header />
         <SearchHeader location={ location } />
         <Footer />
-      </main>
+      </section>
     );
   }
 }

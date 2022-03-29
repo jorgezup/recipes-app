@@ -25,7 +25,7 @@ class Login extends React.Component {
 
       enabledPassword = ({ target }) => {
         const characters = target.value;
-        const minPassword = 6;
+        const minPassword = 7;
         if (characters.length >= minPassword) {
           this.setState({ enabledPassword: true });
         } else {
@@ -33,9 +33,19 @@ class Login extends React.Component {
         }
       }
 
+      handleClick = () => {
+        const { email } = this.state;
+        const { userLogin, history } = this.props;
+        const emailUser = email;
+        userLogin(email);
+        localStorage.setItem('user', JSON.stringify({ email: emailUser }));
+        localStorage.setItem('mealsToken', 1);
+        localStorage.setItem('cocktailsToken', 1);
+        history.push('/foods');
+      }
+
       render() {
         const { email, enabledEmail, enabledPassword } = this.state;
-        const { userLogin } = this.props;
         return (
           <div>
             <label htmlFor="input-email">
@@ -59,9 +69,10 @@ class Login extends React.Component {
             {/* <Link to="proxima pagina"> */}
             <button
               type="button"
-              onClick={ () => userLogin(email) }
+              onClick={ () => this.handleClick(email) }
               to="/carteira"
               disabled={ !(enabledEmail && enabledPassword) }
+              data-testid="login-submit-btn"
             >
               Entrar
             </button>
@@ -72,6 +83,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   userLogin: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
