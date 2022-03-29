@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchHeader from '../components/SearchHeader';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Layout from '../components/Layout';
 
 class Foods extends React.Component {
   render() {
     const { location } = this.props;
 
     return (
-      <main>
-        <Header />
+      <Layout title="Foods">
         <SearchHeader location={ location } />
-        <Footer />
-      </main>
+      </Layout>
     );
   }
 }

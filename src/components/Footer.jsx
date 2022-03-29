@@ -7,27 +7,34 @@ import mealIcon from '../images/mealIcon.svg';
 const Footer = () => {
   const history = useHistory();
   return (
-    <footer data-testid="footer">
+    <footer
+      data-testid="footer"
+      style={ {
+        position: 'fixed',
+        bottom: '0',
+        // height: '70px',
+        // display: 'flex',
+        // justifyContent: 'space-around',
+        // alignItems: 'center',
+      } }
+    >
       <button
         type="button"
-        data-testid="drinks-bottom-btn"
         onClick={ () => history.push('/drinks') }
       >
-        <img src={ drinkIcon } alt="Drink Icon" />
+        <img src={ drinkIcon } alt="Drink Icon" data-testid="drinks-bottom-btn" />
       </button>
       <button
         type="button"
-        data-testid="explore-bottom-btn"
         onClick={ () => history.push('/explore') }
       >
-        <img src={ exploreIcon } alt="Explore Icon" />
+        <img src={ exploreIcon } alt="Explore Icon" data-testid="explore-bottom-btn" />
       </button>
       <button
         type="button"
-        data-testid="food-bottom-btn"
         onClick={ () => history.push('/foods') }
       >
-        <img src={ mealIcon } alt="Meal Icon" />
+        <img src={ mealIcon } alt="Meal Icon" data-testid="food-bottom-btn" />
       </button>
     </footer>
   );
