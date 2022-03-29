@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { requestAPI } from '../Redux/actions';
+import { buttonFilteredClicked, requestAPI } from '../Redux/actions';
 
 class SearchHeader extends React.Component {
   state = {
@@ -31,6 +31,7 @@ class SearchHeader extends React.Component {
     }
     const exactLocation = location.pathname;
     dispatch(requestAPI(searchRecipe, radio, exactLocation));
+    dispatch(buttonFilteredClicked(true));
   };
 
   render() {

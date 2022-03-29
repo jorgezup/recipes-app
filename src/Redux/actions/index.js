@@ -7,6 +7,16 @@ const foodsAPI = (food) => ({
   food,
 });
 
+export const buttonSearchClicked = (bool) => ({
+  type: 'SEARCH_CLICKED',
+  bool,
+});
+
+export const buttonFilteredClicked = (bool) => ({
+  type: 'FILTER_CLICKED',
+  bool,
+});
+
 export const requestAPI = (searchRecipe, radio, exactLocation) => (dispatch) => {
   let url = '';
   if (exactLocation === '/foods') {
@@ -34,16 +44,16 @@ export const requestAPI = (searchRecipe, radio, exactLocation) => (dispatch) => 
 
   if (exactLocation === '/drinks') {
     if (radio === 'nameSearch') {
-      url = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchRecipe}`;
+      url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchRecipe}`;
     }
 
     if (radio === 'ingredient') {
       console.log('entrou');
-      url = `http://www.thecocktaildb.com/api/json/v1/1/search.php?i=${searchRecipe}`;
+      url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchRecipe}`;
     }
 
     if (radio === 'firstLetter') {
-      url = `http://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchRecipe}`;
+      url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchRecipe}`;
     }
 
     return (

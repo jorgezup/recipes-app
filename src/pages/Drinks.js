@@ -1,22 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import SearchHeader from '../components/SearchHeader';
 import Layout from '../components/Layout';
 
-class Drinks extends React.Component {
-  render() {
-    const { location } = this.props;
-
-    return (
-      <Layout title="Drinks">
-        <SearchHeader location={ location } />
-      </Layout>
-    );
-  }
-}
-
-Drinks.propTypes = {
-  location: PropTypes.objectOf(PropTypes.string).isRequired,
+const Drinks = () => {
+  const { location } = useHistory();
+  return (
+    <Layout title="Drinks">
+      <SearchHeader location={ location } />
+    </Layout>
+  );
 };
 
 export default Drinks;

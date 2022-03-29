@@ -1,22 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import SearchHeader from '../components/SearchHeader';
 import Layout from '../components/Layout';
+import RecipeSearch from '../components/RecipeSearch';
 
-class Foods extends React.Component {
-  render() {
-    const { location } = this.props;
+const Foods = () => {
+  const history = useHistory();
+  const { location } = history;
+  const searchClicked = useSelector((state) => state.searchClicked);
+  const { meals } = useSelector((state) => state.foodSearch);
+  const filteredClicked = useSelector((state) => state.filteredClicked);
+  return (
+    <Layout title="Foods">
+      {searchClicked && <SearchHeader location={ location } />}
+      {
+        filteredClicked
+        && (
+          <RecipeSearch
+            recipes={ meals }
+            history={ history }
+          />
+        )
+      }
 
-    return (
-      <Layout title="Foods">
-        <SearchHeader location={ location } />
-      </Layout>
-    );
-  }
-}
-
-Foods.propTypes = {
-  location: PropTypes.objectOf(PropTypes.string).isRequired,
+    </Layout>
+  );
 };
 
 export default Foods;
