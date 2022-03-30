@@ -3,9 +3,7 @@ import React from 'react';
 
 const MAX_RECIPES = 12;
 
-const RecipeSearch = ({ recipes, history }) => {
-  // const [foodSearch, setFoodSearch] = useState();
-
+const RecipeSearchDrink = ({ recipes, history }) => {
   const filtered = recipes.reduce((acc, curl, index) => {
     if (index < MAX_RECIPES) acc.push(curl);
     return acc;
@@ -15,13 +13,13 @@ const RecipeSearch = ({ recipes, history }) => {
     <div>
       {
         filtered.length === 1
-          ? history.push(`/foods/${filtered[0].idMeal}`)
+          ? history.push(`/drinks/${filtered[0].idDrink}`)
           : filtered.map((recipe, index) => (
-            <div key={ recipe.idMeal } data-testid={ `${index}-recipe-card` }>
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <div key={ recipe.idDrink } data-testid={ `${index}-recipe-card` }>
+              <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
               <img
                 data-testid={ `${index}-card-img` }
-                src={ recipe.strMealThumb }
+                src={ recipe.strDrinkThumb }
                 alt=""
               />
             </div>
@@ -31,8 +29,8 @@ const RecipeSearch = ({ recipes, history }) => {
   );
 };
 
-RecipeSearch.propTypes = {
+RecipeSearchDrink.propTypes = {
   recipes: PropTypes.arrayOf(Object),
 }.isRequired;
 
-export default RecipeSearch;
+export default RecipeSearchDrink;
