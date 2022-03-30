@@ -24,7 +24,7 @@ const Header = ({ title }) => {
 
   useEffect(() => {
     dispatch(buttonSearchClicked(isBtnClicked));
-  }, [isBtnClicked]);
+  }, [isBtnClicked, dispatch]);
 
   useEffect(() => {
     const getLocation = () => {

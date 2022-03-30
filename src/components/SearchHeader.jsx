@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { buttonFilteredClicked, requestAPI } from '../Redux/actions';
+import { drinkSearchAPI, foodSearchAPI } from '../Redux/actions';
 
 class SearchHeader extends React.Component {
   state = {
@@ -30,8 +30,8 @@ class SearchHeader extends React.Component {
       global.alert('Your search must have only 1 (one) character');
     }
     const exactLocation = location.pathname;
-    dispatch(requestAPI(searchRecipe, radio, exactLocation));
-    dispatch(buttonFilteredClicked(true));
+    dispatch(foodSearchAPI(searchRecipe, radio, exactLocation));
+    dispatch(drinkSearchAPI(searchRecipe, radio, exactLocation));
   };
 
   render() {
@@ -41,6 +41,7 @@ class SearchHeader extends React.Component {
         <input
           type="text"
           name="searchRecipe"
+          data-testid="search-input"
           value={ searchRecipe }
           onChange={ this.handleSearch }
         />
