@@ -36,7 +36,6 @@ export const foodSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch) 
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           if (data.meals === null) {
             global.alert('Sorry, we haven\'t found any recipes for these filters.');
           }
@@ -54,7 +53,6 @@ export const drinkSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch)
     }
 
     if (radio === 'ingredient') {
-      console.log('entrou');
       url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchRecipe}`;
     }
 
@@ -66,7 +64,6 @@ export const drinkSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch)
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           global.alert('Sorry, we haven\'t found any recipes for these filters.');
           dispatch(foodsAPI(data));
         })

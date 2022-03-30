@@ -9,14 +9,13 @@ const ExploreFoods = () => {
   const [randomFood, setRandomFood] = useState([]);
 
   useEffect(() => {
-    const randomReciple = async () => {
+    const randomRecipe = async () => {
       const { meals } = await fetch(endpointAPI).then((response) => response.json());
       setRandomFood(meals[0]);
     };
-    randomReciple();
+    randomRecipe();
   }, []);
 
-  console.log(randomFood.idMeal);
   const handleClickIngredients = () => {
     history.push('/explore/foods/ingredients');
   };

@@ -14,7 +14,7 @@ function Profile() {
 
   return (
     <Layout title="Profile">
-      <h3 data-testid="profile-email">{ userEmail.email }</h3>
+      <h3 data-testid="profile-email">{ userEmail && userEmail.email }</h3>
       <button
         type="button"
         data-testid="profile-done-btn"

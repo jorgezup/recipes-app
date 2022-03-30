@@ -23,6 +23,7 @@ const RecipeSearchFood = ({ recipes, history }) => {
                 data-testid={ `${index}-card-img` }
                 src={ recipe.strMealThumb }
                 alt=""
+                style={ { width: '100%' } }
               />
             </div>
           ))

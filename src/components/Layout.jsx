@@ -7,7 +7,6 @@ import MainWrapper from './MainWrapper';
 
 const Layout = ({ title, children }) => {
   const { location: { pathname } } = useHistory();
-  console.log(pathname);
   return (
     <div
       style={ {

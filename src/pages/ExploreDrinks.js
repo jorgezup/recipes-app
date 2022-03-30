@@ -9,14 +9,13 @@ const ExploreDrinks = () => {
   const [randomFood, setRandomFood] = useState([]);
 
   useEffect(() => {
-    const randomReciple = async () => {
+    const randomRecipe = async () => {
       const { drinks } = await fetch(endpointAPI).then((response) => response.json());
       setRandomFood(drinks[0]);
     };
-    randomReciple();
+    randomRecipe();
   }, []);
 
-  console.log(randomFood.idMeal);
   const handleClickIngredients = () => {
     history.push('/explore/drinks/ingredients');
   };
@@ -25,7 +24,7 @@ const ExploreDrinks = () => {
   };
 
   return (
-    <Layout title="Explore Foods">
+    <Layout title="Explore Drinks">
       <button
         type="button"
         data-testid="explore-by-ingredient"

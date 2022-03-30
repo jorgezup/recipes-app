@@ -1,6 +1,6 @@
 const initialState = {};
 
-function recipleSearch(state = initialState, action) {
+function recipeSearch(state = initialState, action) {
   switch (action.type) {
   case 'SEARCH':
     return action.food;
@@ -9,4 +9,4 @@ function recipleSearch(state = initialState, action) {
   }
 }
 
-export default recipleSearch;
+export default recipeSearch;
