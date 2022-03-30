@@ -14,6 +14,7 @@ const Drinks = () => {
   const { location } = history;
   const searchClicked = useSelector((state) => state.searchClicked);
   const { drinks } = useSelector((state) => state.recipeSearch);
+  const { drinks: drinkByIngredients } = useSelector((state) => state.byIngredientsDrink);
 
   const fetchDrinks = useCallback(async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
@@ -38,15 +39,20 @@ const Drinks = () => {
           />
         )
       }
-      { !searchClicked
-        && twelveDrinks.map((drink, index) => (
+      { (!searchClicked && !drinkByIngredients)
+        ? (twelveDrinks.map((drink, index) => (
           <Card
             index={ index }
             key={ drink.idDrink }
             image={ drink.strDrinkThumb }
             title={ drink.strDrink }
           />
-        ))}
+        ))) : (
+          <RecipeSearchDrink
+            recipes={ drinkByIngredients }
+            history={ history }
+          />
+        )}
     </Layout>
   );
 };

@@ -1,4 +1,5 @@
 export const LOGIN = 'LOGIN';
+const noRecipleFound = 'Sorry, we haven\'t found any recipes for these filters.';
 
 export const emailValidation = (email) => ({ type: LOGIN, email });
 
@@ -10,6 +11,16 @@ const foodsAPI = (food) => ({
 export const buttonSearchClicked = (bool) => ({
   type: 'SEARCH_CLICKED',
   bool,
+});
+
+const foodsByIngredient = (ingredient) => ({
+  type: 'BY_INGREDIENT_FOOD',
+  ingredient,
+});
+
+const drinksByIngredient = (ingredient) => ({
+  type: 'BY_INGREDIENT_DRINK',
+  ingredient,
 });
 
 export const foodSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch) => {
@@ -32,7 +43,7 @@ export const foodSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch) 
         .then((response) => response.json())
         .then((data) => {
           if (data.meals === null) {
-            global.alert('Sorry, we haven\'t found any recipes for these filters.');
+            global.alert(noRecipleFound);
           }
           dispatch(foodsAPI(data));
         })
@@ -59,9 +70,31 @@ export const drinkSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch)
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+          global.alert(noRecipleFound);
           dispatch(foodsAPI(data));
         })
     );
   }
 };
+
+export const foodByIngredient = (searchRecipe) => (dispatch) => (
+  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchRecipe}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.meals === null) {
+        global.alert(noRecipleFound);
+      }
+      dispatch(foodsByIngredient(data));
+    })
+);
+
+export const drinkByIngredients = (searchRecipe) => (dispatch) => (
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchRecipe}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.meals === null) {
+        global.alert(noRecipleFound);
+      }
+      dispatch(drinksByIngredient(data));
+    })
+);

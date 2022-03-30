@@ -14,7 +14,8 @@ const Foods = () => {
   const { location } = history;
   const searchClicked = useSelector((state) => state.searchClicked);
   const { meals } = useSelector((state) => state.recipeSearch);
-
+  const { meals: mealsByIngredients } = useSelector((state) => state.byIngredientsFood);
+  console.log(mealsByIngredients);
   const fetchRecipes = useCallback(async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const data = await response.json();
@@ -38,15 +39,20 @@ const Foods = () => {
           />
         )
       }
-      { !searchClicked
-        && twelveRecipes.map((recipe, index) => (
+      { (!searchClicked && !mealsByIngredients)
+        ? (twelveRecipes.map((recipe, index) => (
           <Card
             index={ index }
             key={ recipe.idMeal }
             image={ recipe.strMealThumb }
             title={ recipe.strMeal }
           />
-        ))}
+        ))) : (
+          <RecipeSearchFood
+            recipes={ mealsByIngredients }
+            history={ history }
+          />
+        )}
 
     </Layout>
   );
