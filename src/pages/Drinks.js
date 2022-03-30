@@ -7,10 +7,12 @@ import Card from '../components/Card';
 import RecipeSearchDrink from '../components/RecipeSearchDrink';
 
 const LIMIT_DRINKS = 12;
+const LIMIT_CATEGORIES = 5;
 
 const Drinks = () => {
   const history = useHistory();
   const [twelveDrinks, setTwelveDrinks] = useState([]);
+  const [drinkCategories, setDrinkCategories] = useState([]);
   const { location } = history;
   const searchClicked = useSelector((state) => state.searchClicked);
   const { drinks } = useSelector((state) => state.recipeSearch);
@@ -23,11 +25,35 @@ const Drinks = () => {
   }, []);
 
   useEffect(() => {
+    const getDrinksCategories = async () => {
+      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+      const data = await response.json();
+      const reduceData = data.drinks.reduce((acc, curl, index) => {
+        if (index < LIMIT_CATEGORIES) acc.push(curl);
+        return acc;
+      }, []);
+      setDrinkCategories(reduceData);
+    };
+    getDrinksCategories();
+  }, []);
+
+  useEffect(() => {
     fetchDrinks();
   }, [fetchDrinks]);
 
   return (
     <Layout title="Drinks">
+      {
+        drinkCategories.map((category) => (
+          <div key={ category.strCategory }>
+            <button
+              type="button"
+              data-testid={ `${category.strCategory}-category-filter` }
+            >
+              { category.strCategory }
+            </button>
+          </div>))
+      }
       {searchClicked && <SearchHeader location={ location } />}
       {
         drinks
