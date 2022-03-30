@@ -12,11 +12,6 @@ export const buttonSearchClicked = (bool) => ({
   bool,
 });
 
-export const buttonFilteredClicked = (bool) => ({
-  type: 'FILTER_CLICKED',
-  bool,
-});
-
 export const foodSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch) => {
   let url = '';
   if (exactLocation === '/foods') {
