@@ -16,6 +16,7 @@ import DrinkInProgress from './pages/DrinkInProgress';
 import Ingredients from './pages/Ingredients';
 import Nationalities from './pages/Nationalities';
 import IngredientsDrinks from './pages/IngredientsDrinks';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
       <Route path="/profile" component={ Profile } />
       <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/favorite-recipes" component={ Favorites } />
+      <Route path="*" component={ NotFound } />
     </Switch>
   );
 }

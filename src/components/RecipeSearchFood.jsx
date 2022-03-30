@@ -11,13 +11,22 @@ const RecipeSearchFood = ({ recipes, history }) => {
     return acc;
   }, []);
 
+  const handleClickRecipe = (recipe) => {
+    history.push(`/foods/${recipe}`);
+  };
+
   return (
     <div>
       {
         filtered.length === 1
           ? history.push(`/foods/${filtered[0].idMeal}`)
           : filtered.map((recipe, index) => (
-            <div key={ recipe.idMeal } data-testid={ `${index}-recipe-card` }>
+            <button
+              type="button"
+              key={ recipe.idMeal }
+              data-testid={ `${index}-recipe-card` }
+              onClick={ () => handleClickRecipe(recipe.idMeal) }
+            >
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <img
                 data-testid={ `${index}-card-img` }
@@ -25,7 +34,7 @@ const RecipeSearchFood = ({ recipes, history }) => {
                 alt=""
                 style={ { width: '100%' } }
               />
-            </div>
+            </button>
           ))
       }
     </div>
