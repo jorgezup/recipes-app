@@ -16,7 +16,6 @@ const ExploreDrinks = () => {
     randomReciple();
   }, []);
 
-  console.log(randomFood.idMeal);
   const handleClickIngredients = () => {
     history.push('/explore/drinks/ingredients');
   };
@@ -25,7 +24,7 @@ const ExploreDrinks = () => {
   };
 
   return (
-    <Layout title="Explore Foods">
+    <Layout title="Explore Drinks">
       <button
         type="button"
         data-testid="explore-by-ingredient"

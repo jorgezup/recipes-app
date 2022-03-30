@@ -16,7 +16,6 @@ const ExploreFoods = () => {
     randomReciple();
   }, []);
 
-  console.log(randomFood.idMeal);
   const handleClickIngredients = () => {
     history.push('/explore/foods/ingredients');
   };
