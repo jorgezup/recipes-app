@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { drinkByIngredients } from '../Redux/actions';
 
 const MAX_INGREDIENTS = 12;
 
 const IngredientsDrinks = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
@@ -20,14 +25,21 @@ const IngredientsDrinks = () => {
     ingredientes();
   }, []);
 
+  const handleClickCard = (searchIngredient) => {
+    dispatch(drinkByIngredients(searchIngredient));
+    history.push('/drinks');
+  };
+
   return (
 
     <Layout title="Explore Ingredients">
       {
         ingredients && ingredients.map((ingredient, index) => (
-          <div
+          <button
+            type="button"
             key={ index }
             data-testid={ `${index}-ingredient-card` }
+            onClick={ () => handleClickCard(ingredient.strIngredient1) }
           >
             <img
               data-testid={ `${index}-card-img` }
@@ -35,7 +47,7 @@ const IngredientsDrinks = () => {
               alt="ingredient"
             />
             <p data-testid={ `${index}-card-name` }>{ingredient.strIngredient1}</p>
-          </div>
+          </button>
         ))
       }
     </Layout>
