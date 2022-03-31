@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import { emailValidation } from '../Redux/actions';
 
 class Login extends React.Component {
@@ -66,17 +65,15 @@ class Login extends React.Component {
                 data-testid="password-input"
               />
             </label>
-            {/* <Link to="proxima pagina"> */}
             <button
               type="button"
               onClick={ () => this.handleClick(email) }
-              to="/carteira"
+              to="/foods"
               disabled={ !(enabledEmail && enabledPassword) }
               data-testid="login-submit-btn"
             >
               Entrar
             </button>
-            {/* </Link> */}
           </div>);
       }
 }
