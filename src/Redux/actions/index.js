@@ -1,5 +1,5 @@
 export const LOGIN = 'LOGIN';
-const noRecipleFound = 'Sorry, we haven\'t found any recipes for these filters.';
+const noRecipeFound = 'Sorry, we haven\'t found any recipes for these filters.';
 
 export const emailValidation = (email) => ({ type: LOGIN, email });
 
@@ -82,7 +82,7 @@ export const foodByIngredient = (searchRecipe) => (dispatch) => (
     .then((response) => response.json())
     .then((data) => {
       if (data.meals === null) {
-        global.alert(noRecipleFound);
+        global.alert(noRecipeFound);
       }
       dispatch(foodsByIngredient(data));
     })
@@ -93,7 +93,7 @@ export const drinkByIngredients = (searchRecipe) => (dispatch) => (
     .then((response) => response.json())
     .then((data) => {
       if (data.meals === null) {
-        global.alert(noRecipleFound);
+        global.alert(noRecipeFound);
       }
       dispatch(drinksByIngredient(data));
     })
