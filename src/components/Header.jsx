@@ -1,30 +1,23 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import { buttonSearchClicked } from '../Redux/actions';
+import SearchHeader from './SearchHeader';
 import Title from './Title';
 
 const Header = ({ title }) => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const {
     location: { pathname },
   } = history;
-  /* Provavel ter um contexto para o Header para controle do
-  botão no header e no componente de busca do header */
-  const [isBtnClicked, setIsBtnClicked] = useState(false);
+
   const [showSearchIcon, setShowSearchIcon] = useState(false);
+  const [isSearchHeaderOpen, setSearchHeaderOpen] = useState(false);
 
-  const handleSearchBtn = () => {
-    setIsBtnClicked(!isBtnClicked);
+  const toggleSearchHeader = () => {
+    setSearchHeaderOpen(!isSearchHeaderOpen);
   };
-
-  useEffect(() => {
-    dispatch(buttonSearchClicked(isBtnClicked));
-  }, [isBtnClicked, dispatch]);
 
   useEffect(() => {
     const getLocation = () => {
@@ -40,33 +33,39 @@ const Header = ({ title }) => {
     };
     getLocation();
   }, [pathname]);
+
   return (
-    <header
-      style={ {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        height: '70px',
-      } }
-    >
-      <button type="button" onClick={ () => history.push('/profile') }>
-        <img
-          src={ profileIcon }
-          alt="Profile Icon"
-          data-testid="profile-top-btn"
-        />
-      </button>
-      <Title>{title}</Title>
-      {showSearchIcon && (
-        <button type="button" onClick={ handleSearchBtn }>
+    <>
+      <header
+        style={ {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          height: '70px',
+        } }
+      >
+        <button type="button" onClick={ () => history.push('/profile') }>
           <img
-            src={ searchIcon }
-            alt="Search Icon"
-            data-testid="search-top-btn"
+            src={ profileIcon }
+            alt="Profile Icon"
+            data-testid="profile-top-btn"
           />
         </button>
-      )}
-    </header>
+        <Title>{title}</Title>
+        {showSearchIcon && (
+          <button type="button" onClick={ toggleSearchHeader }>
+            <img
+              src={ searchIcon }
+              alt="Search Icon"
+              data-testid="search-top-btn"
+            />
+          </button>
+        )}
+      </header>
+      {
+        isSearchHeaderOpen && <SearchHeader />
+      }
+    </>
   );
 };
 
