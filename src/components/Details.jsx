@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Loading from './Loading';
+import '../css/Detail.css';
 
-const Details = ({ recipe, recommendations }) => {
-  console.log(recommendations);
+const Details = ({ recipe, recommendations, history, location }) => {
+  const handleClickCardRecomendation = (id) => {
+    history.push(`${location}/${id}`);
+  };
+
   return (
     <div style={ { width: '360px' } }>
       {recipe ? (
@@ -47,17 +51,29 @@ const Details = ({ recipe, recommendations }) => {
             />
           )}
 
-          <div>Recommended Drinks</div>
-          {/* TODO Card para recomendaçoes */}
-          <ul>
-            {recommendations.map((recommendation, index) => (
-              <li key={ index } data-testid={ `${index}-recomendation-card` }>
-                <span data-testid={ `${index}-recomendation-title` }>
-                  {recommendation.name}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="recomended-drinks">
+            {/* TODO Card para recomendaçoes */}
+            {
+              recommendations.map((recommendation, index) => (
+                <button
+                  type="button"
+                  key={ index }
+                  className="recomendation-cards"
+                  data-testid={ `${index}-recomendation-card` }
+                  onClick={ () => handleClickCardRecomendation(recommendation.id) }
+                >
+                  <p data-testid={ `${index}-recomendation-title` }>
+                    {recommendation.name}
+                  </p>
+                  <img
+                    src={ recommendation.image }
+                    className="recomendation-image"
+                    alt="recomendation-img"
+                  />
+                </button>
+              ))
+            }
+          </div>
           <button data-testid="start-recipe-btn" type="button">
             Iniciar Receita
           </button>

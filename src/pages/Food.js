@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useCallback, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Details from '../components/Details';
 import Loading from '../components/Loading';
 
@@ -8,6 +8,7 @@ const LIMIT_DRINKS = 6;
 
 const Food = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [recipe, setRecipe] = useState();
   const [recommendations, setRecommendations] = useState();
 
@@ -16,6 +17,7 @@ const Food = () => {
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,
     );
     const { meals } = await response.json();
+    console.log(meals);
     const objRecipe = meals[0];
     const ingredients = Object.keys(objRecipe)
       .filter((key) => key.includes('strIngredient'))
@@ -49,12 +51,14 @@ const Food = () => {
   const fetchRecommendations = useCallback(async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const { drinks } = await response.json();
+    console.log(drinks);
     const filteredDrinks = drinks.slice(0, LIMIT_DRINKS);
 
     const recommendationFiltered = filteredDrinks.reduce((acc, cur) => {
       acc.push({
         name: cur.strDrink,
         image: cur.strDrinkThumb,
+        id: cur.idDrink,
       });
       return acc;
     }, []);
@@ -68,8 +72,12 @@ const Food = () => {
 
   return (
     <div>
-      {recipe && recommendations
-        ? <Details recipe={ recipe } recommendations={ recommendations } />
+      {recipe && recommendations ? (<Details
+        recipe={ recipe }
+        history={ history }
+        location="/drinks"
+        recommendations={ recommendations }
+      />)
         : <Loading />}
     </div>);
 };

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useCallback, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Details from '../components/Details';
 import Loading from '../components/Loading';
 
@@ -8,6 +8,8 @@ const LIMIT_DRINKS = 6;
 
 const Drink = () => {
   const { id } = useParams();
+  const history = useHistory();
+  // const { location } = history;
   const [drink, setDrink] = useState();
   const [recommendations, setRecommendations] = useState();
 
@@ -71,8 +73,12 @@ const Drink = () => {
 
   return (
     <div>
-      {drink && recommendations ? (
-        <Details recipe={ drink } recommendations={ recommendations } />
+      {drink && recommendations ? (<Details
+        recipe={ drink }
+        history={ history }
+        location="/foods"
+        recommendations={ recommendations }
+      />
       ) : (
         <Loading />
       )}
