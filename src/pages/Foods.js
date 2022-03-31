@@ -1,45 +1,41 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import SearchHeader from '../components/SearchHeader';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/Layout';
 import Card from '../components/Card';
 import RecipeSearchFood from '../components/RecipeSearchFood';
+import { getMealsThunk } from '../Redux/actions/meals';
+import { getMealsCategoriesThunk } from '../Redux/actions/mealsCategories';
+import Loading from '../components/Loading';
 
 const LIMIT_MEALS = 12;
 const LIMIT_CATEGORIES = 5;
 
 const Foods = () => {
-  const history = useHistory();
-  const { location } = history;
-  const [twelveRecipes, setTwelveRecipes] = useState([]);
-  const [foodCategories, setFoodCategories] = useState([]);
-  const searchClicked = useSelector((state) => state.searchClicked);
-  const { meals } = useSelector((state) => state.recipeSearch);
+  const dispatch = useDispatch();
+
+  const {
+    meals,
+    isFetching: isFetchingMeals,
+  } = useSelector((state) => state.meals);
+  const {
+    categories,
+    isFetching: isFetchingCategories,
+  } = useSelector((state) => state.mealsCategories);
+  const { meals: searchedMeals } = useSelector((state) => state.recipeSearch);
   const { meals: mealsByIngredients } = useSelector((state) => state.byIngredientsFood);
-  console.log(mealsByIngredients);
-  const fetchRecipes = useCallback(async () => {
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    const data = await response.json();
-    const filteredMeals = data.meals.slice(0, LIMIT_MEALS);
-    setTwelveRecipes(filteredMeals);
-  }, []);
+
+  const twelveMeals = meals.slice(0, LIMIT_MEALS);
+  const mealCategories = categories.slice(0, LIMIT_CATEGORIES);
+  const twelveSearched = searchedMeals?.slice(0, LIMIT_MEALS);
 
   useEffect(() => {
-    const getFoodsCategories = async () => {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-      const data = await response.json();
-      const reduceData = data.meals.reduce((acc, curl, index) => {
-        if (index < LIMIT_CATEGORIES) acc.push(curl);
-        return acc;
-      }, []);
-      setFoodCategories(reduceData);
-    };
-    getFoodsCategories();
-  }, []);
+    dispatch(getMealsThunk());
+    dispatch(getMealsCategoriesThunk());
+  }, [dispatch]);
 
   const getByCategory = async () => {
-    const response = await fetch('http://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood');
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood');
     const data = await response.json();
     console.log(data);
   };
@@ -49,26 +45,47 @@ const Foods = () => {
     getByCategory();
   };
 
-  useEffect(() => {
-    fetchRecipes();
-  }, [fetchRecipes]);
-
   return (
     <Layout title="Foods">
+      <div>
+        {
+          isFetchingCategories ? <Loading />
+            : mealCategories.map((category) => (
+              <span key={ category.strCategory }>
+                <button
+                  type="button"
+                  data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => buttonOfCategories(category.strCategory) }
+                >
+                  { category.strCategory }
+                </button>
+              </span>))
+        }
+      </div>
+      {isFetchingMeals && <Loading />}
       {
-        foodCategories.map((category) => (
-          <div key={ category.strCategory }>
-            <button
-              type="button"
-              data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => buttonOfCategories(category.strCategory) }
-            >
-              { category.strCategory }
-            </button>
-          </div>))
+        !twelveSearched && !mealsByIngredients
+          && twelveMeals.map((food, index) => (
+            <Link key={ food.idMeal } to={ `/foods/${food.idMeal}` }>
+              <Card
+                index={ index }
+                image={ food.strMealThumb }
+                title={ food.strMeal }
+              />
+            </Link>
+          ))
       }
-      {searchClicked && <SearchHeader location={ location } />}
       {
+        /* TODO -> pensar sobre reutilizar o componente de Card
+        não é necessário o uso deste componente RecipeSearchDrink */
+        (twelveSearched || mealsByIngredients)
+          && (
+            <RecipeSearchFood
+              recipes={ twelveSearched || mealsByIngredients }
+            />
+          )
+      }
+      {/* {
         meals
         && (
           <RecipeSearchFood
@@ -90,7 +107,7 @@ const Foods = () => {
             recipes={ mealsByIngredients }
             history={ history }
           />
-        )}
+        )} */}
 
     </Layout>
   );

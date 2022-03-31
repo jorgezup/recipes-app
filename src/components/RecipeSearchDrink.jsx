@@ -1,28 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
-const MAX_RECIPES = 12;
-
-const RecipeSearchDrink = ({ recipes, history }) => {
-  const filtered = recipes.reduce((acc, curl, index) => {
-    if (index < MAX_RECIPES) acc.push(curl);
-    return acc;
-  }, []);
-
+const RecipeSearchDrink = ({ recipes }) => {
+  const history = useHistory();
   return (
     <div>
       {
-        filtered.length === 1
-          ? history.push(`/drinks/${filtered[0].idDrink}`)
-          : filtered.map((recipe, index) => (
-            <div key={ recipe.idDrink } data-testid={ `${index}-recipe-card` }>
-              <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ recipe.strDrinkThumb }
-                alt=""
-              />
-            </div>
+        recipes.length === 1
+          ? history.push(`/drinks/${recipes[0].idDrink}`)
+          : recipes.map((recipe, index) => (
+            <Link
+              key={ recipe.idDrink }
+              to={ `/drinks/${recipe.idDrink}` }
+            >
+              <div data-testid={ `${index}-recipe-card` }>
+                <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ recipe.strDrinkThumb }
+                  alt=""
+                  style={ { width: '100%' } }
+                />
+              </div>
+            </Link>
           ))
       }
     </div>
