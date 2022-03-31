@@ -1,0 +1,19 @@
+.recomendation-cards {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  margin: 0 10px;
+  width: 200px;
+}
+
+.recomendation-image {
+  height: 150px;
+  width: 140px;
+}
+
+.recomended-drinks {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}
