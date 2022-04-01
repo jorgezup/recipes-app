@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Details from '../components/Details';
+import DetailsFood from '../components/DetailsFood';
 import Loading from '../components/Loading';
 
 const LIMIT_DRINKS = 6;
@@ -72,10 +72,9 @@ const Food = () => {
 
   return (
     <div>
-      {recipe && recommendations ? (<Details
+      {recipe && recommendations ? (<DetailsFood
         recipe={ recipe }
         history={ history }
-        location="/drinks"
         recommendations={ recommendations }
       />)
         : <Loading />}
