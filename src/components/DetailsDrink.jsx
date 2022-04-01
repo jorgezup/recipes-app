@@ -57,7 +57,7 @@ const Details = ({ recipe, recommendations, history }) => {
     const getFavorites = getFavoritesLocal()
       .some((favorite) => favorite.id.includes(recipe.idDrink));
     setFavorites(getFavorites);
-  }, []);
+  }, [recipe.idDrink]);
 
   const inProgressRecipes = () => {
     recipeStarted = ({
