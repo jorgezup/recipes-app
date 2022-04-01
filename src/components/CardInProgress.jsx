@@ -18,7 +18,10 @@ const CardInProgress = ({ recipe }) => {
           console.log(ingredient);
           return (
             <li key={ index } data-testid={ `${index}-ingredient-step` }>
-              {ingredient}
+              <label htmlFor={ ingredient }>
+                <input type="checkbox" name={ ingredient } id={ ingredient } />
+                {ingredient}
+              </label>
             </li>
           );
         })}
