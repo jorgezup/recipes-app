@@ -12,6 +12,7 @@ const FoodInProgress = () => {
   const { meals, isFetching } = useSelector((state) => state.mealById);
 
   const recipe = {
+    id: meals[0]?.idMeal,
     title: meals[0]?.strMeal,
     image: meals[0]?.strMealThumb,
     category: meals[0]?.strCategory,

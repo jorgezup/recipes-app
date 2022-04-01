@@ -1,8 +1,22 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
+import { setMealInProgress } from '../services/localStorage/recipesInProgress';
 
 const CardInProgress = ({ recipe }) => {
-  console.log('aqui', recipe);
+  const [checkIngredient, setCheckIngredient] = useState(true);
+  const toggleCheckBox = () => setCheckIngredient(!checkIngredient);
+
+  const handleCheckIngredient = (id, ingredient) => {
+    console.log(id);
+    toggleCheckBox();
+    console.log(checkIngredient);
+    if (checkIngredient === true) {
+      console.log(ingredient);
+      setMealInProgress(id, ingredient);
+    } else {
+      console.log('tchau');
+    }
+  };
   return (
     <div style={ { width: '360px' } }>
       <h3 data-testid="recipe-title">{recipe.title}</h3>
@@ -14,17 +28,19 @@ const CardInProgress = ({ recipe }) => {
       />
       <p data-testid="recipe-category">{recipe.category}</p>
       <ul>
-        {recipe.ingredients.map((ingredient, index) => {
-          console.log(ingredient);
-          return (
-            <li key={ index } data-testid={ `${index}-ingredient-step` }>
-              <label htmlFor={ ingredient }>
-                <input type="checkbox" name={ ingredient } id={ ingredient } />
-                {ingredient}
-              </label>
-            </li>
-          );
-        })}
+        {recipe.ingredients.map((ingredient, index) => (
+          <li key={ index } data-testid={ `${index}-ingredient-step` }>
+            <label htmlFor={ ingredient }>
+              <input
+                type="checkbox"
+                name={ ingredient }
+                id={ ingredient }
+                onChange={ () => handleCheckIngredient(recipe.id, ingredient) }
+              />
+              {ingredient}
+            </label>
+          </li>
+        ))}
       </ul>
       <p data-testid="instructions">{recipe.instructions}</p>
       <button data-testid="share-btn" type="button">
