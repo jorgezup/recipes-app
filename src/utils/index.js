@@ -1,11 +1,11 @@
-export const setIngredientsArray = () => Object.keys(objRecipe)
+export const setIngredientsArray = (objRecipe) => Object.keys(objRecipe)
   .filter((key) => key.includes('strIngredient'))
   .reduce((cur, key) => {
-    if (objRecipe[key] !== '')cur.push(objRecipe[key]);
+    if (objRecipe[key]?.length)cur.push(objRecipe[key]);
     return cur;
   }, []);
 
-export const setMeasureArray = () => Object.keys(objRecipe)
+export const setMeasureArray = (objRecipe) => Object.keys(objRecipe)
   .filter((key) => key.includes('strMeasure'))
   .reduce((cur, key) => {
     if (objRecipe[key] !== '')cur.push(objRecipe[key]);

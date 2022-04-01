@@ -13,20 +13,26 @@ const CardInProgress = ({ recipe }) => {
         style={ { width: '100%' } }
       />
       <p data-testid="recipe-category">{recipe.category}</p>
-      {/* <ul>
-      {
-        ingredients.map((ingredient, index) => {
+      <ul>
+        {recipe.ingredients.map((ingredient, index) => {
           console.log(ingredient);
           return (
-            <li key={ index } data-testid={ `${index}-ingredient-step` }>{ingredient}</li>
+            <li key={ index } data-testid={ `${index}-ingredient-step` }>
+              {ingredient}
+            </li>
           );
-        })
-      }
-    </ul> */}
+        })}
+      </ul>
       <p data-testid="instructions">{recipe.instructions}</p>
-      <button data-testid="share-btn" type="button">Compartilhar</button>
-      <button data-testid="favorite-btn" type="button">Favoritar</button>
-      <button data-testid="finish-recipe-btn" type="button">Finalizar</button>
+      <button data-testid="share-btn" type="button">
+        Compartilhar
+      </button>
+      <button data-testid="favorite-btn" type="button">
+        Favoritar
+      </button>
+      <button data-testid="finish-recipe-btn" type="button">
+        Finalizar
+      </button>
     </div>
   );
 };
