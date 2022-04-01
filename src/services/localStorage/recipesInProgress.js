@@ -78,3 +78,14 @@ export const setMealInProgress = (id, ingredient) => {
     });
   }
 };
+
+export const removeMealInProgress = (id, ingredient) => {
+  const prevState = readRecipesInProgress();
+  saveRecipesInProgress({
+    ...prevState,
+    meals: {
+      ...prevState.meals,
+      [id]: prevState.meals[id].filter((item) => item !== ingredient),
+    },
+  });
+};

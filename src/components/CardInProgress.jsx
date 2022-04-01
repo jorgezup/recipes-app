@@ -1,22 +1,30 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { setMealInProgress } from '../services/localStorage/recipesInProgress';
+import {
+  setMealInProgress,
+  removeMealInProgress,
+  getRecipesInProgress } from '../services/localStorage/recipesInProgress';
 
 const CardInProgress = ({ recipe }) => {
-  const [checkIngredient, setCheckIngredient] = useState(true);
-  const toggleCheckBox = () => setCheckIngredient(!checkIngredient);
+  // const [checkIngredient, setCheckIngredient] = useState(true);
+  const [ingredientNames, setIngredientNames] = useState([]);
+  // const toggleCheckBox = () => setCheckIngredient(!checkIngredient);
 
-  const handleCheckIngredient = (id, ingredient) => {
-    console.log(id);
-    toggleCheckBox();
-    console.log(checkIngredient);
-    if (checkIngredient === true) {
-      console.log(ingredient);
+  const ingredientFilter = (id, ingredient) => {
+    if (!ingredientNames.includes(ingredient)) {
       setMealInProgress(id, ingredient);
     } else {
-      console.log('tchau');
+      removeMealInProgress(id, ingredient);
     }
   };
+
+  const handleCheckIngredient = (id, ingredient) => {
+    setIngredientNames([...ingredientNames, ingredient]);
+    ingredientFilter(id, ingredient);
+  };
+
+  const { meals: localStorage } = getRecipesInProgress();
+
   return (
     <div style={ { width: '360px' } }>
       <h3 data-testid="recipe-title">{recipe.title}</h3>
@@ -35,6 +43,7 @@ const CardInProgress = ({ recipe }) => {
                 type="checkbox"
                 name={ ingredient }
                 id={ ingredient }
+                checked={ localStorage[recipe.id]?.includes(ingredient) }
                 onChange={ () => handleCheckIngredient(recipe.id, ingredient) }
               />
               {ingredient}
