@@ -67,7 +67,6 @@ const Drinks = () => {
 
   return (
     <Layout title="Drinks">
-      {/* Sugestão: Talvez seja interessante criar um componente */}
       <button
         type="button"
         data-testid="All-category-filter"

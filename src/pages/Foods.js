@@ -103,8 +103,6 @@ const Foods = () => {
           ))
       }
       {
-        /* TODO -> pensar sobre reutilizar o componente de Card
-        não é necessário o uso deste componente RecipeSearchDrink */
         (twelveSearched || mealsByIngredients)
           && (
             <RecipeSearchFood
@@ -112,30 +110,6 @@ const Foods = () => {
             />
           )
       }
-      {/* {
-        meals
-        && (
-          <RecipeSearchFood
-            recipes={ meals }
-            history={ history }
-          />
-        )
-      }
-      { (!searchClicked && !mealsByIngredients)
-        ? (twelveRecipes.map((recipe, index) => (
-          <Card
-            index={ index }
-            key={ recipe.idMeal }
-            image={ recipe.strMealThumb }
-            title={ recipe.strMeal }
-          />
-        ))) : (
-          <RecipeSearchFood
-            recipes={ mealsByIngredients }
-            history={ history }
-          />
-        )} */}
-
     </Layout>
   );
 };
