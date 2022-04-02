@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Details from '../components/Details';
+import DetailsDrink from '../components/DetailsDrink';
 import Loading from '../components/Loading';
 
 const LIMIT_DRINKS = 6;
@@ -60,6 +60,7 @@ const Drink = () => {
       acc.push({
         name: cur.strMeal,
         image: cur.strMealThumb,
+        id: cur.idMeal,
       });
       return acc;
     }, []);
@@ -73,10 +74,9 @@ const Drink = () => {
 
   return (
     <div>
-      {drink && recommendations ? (<Details
+      {drink && recommendations ? (<DetailsDrink
         recipe={ drink }
         history={ history }
-        location="/foods"
         recommendations={ recommendations }
       />
       ) : (
