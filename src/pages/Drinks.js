@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -7,12 +7,15 @@ import Card from '../components/Card';
 import RecipeSearchDrink from '../components/RecipeSearchDrink';
 import { getDrinksThunk } from '../Redux/actions/drinks';
 import { getDrinksCategoriesThunk } from '../Redux/actions/drinksCategories';
+import { fetchDrinksByCategory } from '../services/api';
 
 const LIMIT_DRINKS = 12;
 const LIMIT_CATEGORIES = 5;
 
 const Drinks = () => {
   const dispatch = useDispatch();
+  const [nameDrinkCategory, setNameDrinkCategory] = useState('');
+  const [twelveDrinks, setTwelveDrinks] = useState([]);
 
   const {
     drinks,
@@ -25,10 +28,37 @@ const Drinks = () => {
   const { drinks: searchedDrinks } = useSelector((state) => state.recipeSearch);
   const { drinks: drinkByIngredients } = useSelector((state) => state.byIngredientsDrink);
 
-  const twelveDrinks = drinks.slice(0, LIMIT_DRINKS);
+  const twelveDrinksArray = drinks.slice(0, LIMIT_DRINKS);
   const drinkCategories = categories.slice(0, LIMIT_CATEGORIES);
   const twelveSearched = searchedDrinks?.slice(0, LIMIT_DRINKS);
   const twelveByIngredients = drinkByIngredients?.slice(0, LIMIT_DRINKS);
+
+  useEffect(() => {
+    setTwelveDrinks(drinks.slice(0, LIMIT_DRINKS));
+  }, [drinks]);
+
+  const getByCategory = async (drinkCategory) => {
+    const { drinks: drinksByCategory } = await fetchDrinksByCategory(drinkCategory);
+    const reduceData = drinksByCategory.reduce((acc, curl, index) => {
+      if (index < LIMIT_DRINKS) acc.push(curl);
+      return acc;
+    }, []);
+
+    if (drinkCategory === nameDrinkCategory) {
+      setTwelveDrinks(twelveDrinksArray);
+      setNameDrinkCategory('');
+    }
+    if (drinkCategory !== nameDrinkCategory) setTwelveDrinks(reduceData);
+  };
+
+  const buttonOfCategories = (drinkCategory) => {
+    setNameDrinkCategory(drinkCategory);
+    getByCategory(drinkCategory);
+  };
+
+  const buttonAll = () => {
+    setTwelveDrinks(twelveDrinksArray);
+  };
 
   useEffect(() => {
     dispatch(getDrinksThunk());
@@ -38,6 +68,13 @@ const Drinks = () => {
   return (
     <Layout title="Drinks">
       {/* Sugestão: Talvez seja interessante criar um componente */}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => buttonAll() }
+      >
+        All
+      </button>
       <div>
         {
           isFetchingCategories ? <Loading />
@@ -46,6 +83,7 @@ const Drinks = () => {
                 <button
                   type="button"
                   data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => buttonOfCategories(category.strCategory) }
                 >
                   { category.strCategory }
                 </button>

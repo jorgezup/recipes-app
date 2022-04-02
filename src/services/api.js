@@ -33,3 +33,15 @@ export const fetchDrinkById = async (drinkId) => {
   const { drinks } = await response.json();
   return drinks;
 };
+
+export const fetchMealsByCategory = async (foodCategory) => {
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${foodCategory}`);
+  const meals = await response.json();
+  return meals;
+};
+
+export const fetchDrinksByCategory = async (drinkCategory) => {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${drinkCategory}`);
+  const drinks = await response.json();
+  return drinks;
+};
