@@ -18,6 +18,7 @@ const FoodInProgress = () => {
     category: meals[0]?.strCategory,
     instructions: meals[0]?.strInstructions,
     ingredients: setIngredientsArray(meals[0] || {}),
+    nationality: meals[0]?.strArea,
   };
 
   useEffect(() => {
