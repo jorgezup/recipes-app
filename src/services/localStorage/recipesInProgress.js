@@ -56,19 +56,13 @@ export const setCocktailInProgress = (cocktail) => {
 
 export const setMealInProgress = (id, ingredient) => {
   if (ingredient) {
-    // console.log('setRecipeMeal', ingredient);
     const prevState = readRecipesInProgress();
-    // console.log(prevState);
-    // console.log(Object.keys(prevState.meals]));
     if (!prevState.meals[id]) {
       prevState.meals = {
         ...prevState.meals,
         [id]: [],
       };
-      // console.log(prevState);
     }
-    // console.log((prevState));
-    // console.log(obj);
     saveRecipesInProgress({
       ...prevState,
       meals: {
