@@ -1,40 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
-const MAX_RECIPES = 12;
-
-const RecipeSearchFood = ({ recipes, history }) => {
-  // const [foodSearch, setFoodSearch] = useState();
-
-  const filtered = recipes.reduce((acc, curl, index) => {
-    if (index < MAX_RECIPES) acc.push(curl);
-    return acc;
-  }, []);
-
-  const handleClickRecipe = (recipe) => {
-    history.push(`/foods/${recipe}`);
-  };
+const RecipeSearchFood = ({ recipes }) => {
+  const history = useHistory();
 
   return (
     <div>
       {
-        filtered.length === 1
-          ? history.push(`/foods/${filtered[0].idMeal}`)
-          : filtered.map((recipe, index) => (
-            <button
-              type="button"
+        recipes.length === 1
+          ? history.push(`/foods/${recipes[0].idMeal}`)
+          : recipes.map((recipe, index) => (
+            <Link
               key={ recipe.idMeal }
-              data-testid={ `${index}-recipe-card` }
-              onClick={ () => handleClickRecipe(recipe.idMeal) }
+              to={ `/foods/${recipe.idMeal}` }
             >
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ recipe.strMealThumb }
-                alt=""
-                style={ { width: '100%' } }
-              />
-            </button>
+              <div data-testid={ `${index}-recipe-card` }>
+                <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ recipe.strMealThumb }
+                  alt=""
+                  style={ { width: '100%' } }
+                />
+              </div>
+            </Link>
           ))
       }
     </div>

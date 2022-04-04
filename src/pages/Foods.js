@@ -1,58 +1,54 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import SearchHeader from '../components/SearchHeader';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/Layout';
 import Card from '../components/Card';
 import RecipeSearchFood from '../components/RecipeSearchFood';
+import { getMealsThunk } from '../Redux/actions/meals';
+import { getMealsCategoriesThunk } from '../Redux/actions/mealsCategories';
+import Loading from '../components/Loading';
+import { fetchMealsByCategory } from '../services/api';
 
 const LIMIT_MEALS = 12;
 const LIMIT_CATEGORIES = 5;
 
 const Foods = () => {
-  const history = useHistory();
-  const { location } = history;
-  const [twelveRecipes, setTwelveRecipes] = useState([]);
-  const [foodCategories, setFoodCategories] = useState([]);
+  const dispatch = useDispatch();
   const [nameFoodCategory, setNameFoodCategory] = useState('');
-  const [filteredMeal, setFilteredMeal] = useState([]);
-  const searchClicked = useSelector((state) => state.searchClicked);
-  const { meals } = useSelector((state) => state.recipeSearch);
+  const [twelveMeals, setTwelveMeals] = useState([]);
+
+  const {
+    meals,
+    isFetching: isFetchingMeals,
+  } = useSelector((state) => state.meals);
+  const {
+    categories,
+    isFetching: isFetchingCategories,
+  } = useSelector((state) => state.mealsCategories);
+  const { meals: searchedMeals } = useSelector((state) => state.recipeSearch);
   const { meals: mealsByIngredients } = useSelector((state) => state.byIngredientsFood);
 
-  const fetchRecipes = useCallback(async () => {
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    const data = await response.json();
-    const filteredMeals = data.meals.slice(0, LIMIT_MEALS);
-    setFilteredMeal(filteredMeals);
-    setTwelveRecipes(filteredMeals);
-  }, []);
-
   useEffect(() => {
-    const getFoodsCategories = async () => {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-      const data = await response.json();
-      const reduceData = data.meals.reduce((acc, curl, index) => {
-        if (index < LIMIT_CATEGORIES) acc.push(curl);
-        return acc;
-      }, []);
-      setFoodCategories(reduceData);
-    };
-    getFoodsCategories();
-  }, []);
+    setTwelveMeals(meals.slice(0, LIMIT_MEALS));
+  }, [meals]);
+
+  // const twelveMeals = meals.slice(0, LIMIT_MEALS);
+  const twelveMealsArray = meals.slice(0, LIMIT_MEALS);
+  const mealCategories = categories.slice(0, LIMIT_CATEGORIES);
+  const twelveSearched = searchedMeals?.slice(0, LIMIT_MEALS);
 
   const getByCategory = async (foodCategory) => {
-    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${foodCategory}`);
-    const data = await response.json();
-    const reduceData = data.meals.reduce((acc, curl, index) => {
+    const { meals: mealsByCategory } = await fetchMealsByCategory(foodCategory);
+    const reduceData = mealsByCategory.reduce((acc, curl, index) => {
       if (index < LIMIT_MEALS) acc.push(curl);
       return acc;
     }, []);
+
     if (foodCategory === nameFoodCategory) {
-      setTwelveRecipes(filteredMeal);
+      setTwelveMeals(twelveMealsArray);
       setNameFoodCategory('');
     }
-    if (foodCategory !== nameFoodCategory) setTwelveRecipes(reduceData);
+    if (foodCategory !== nameFoodCategory) setTwelveMeals(reduceData);
   };
 
   const buttonOfCategories = (foodCategory) => {
@@ -61,15 +57,13 @@ const Foods = () => {
   };
 
   const buttonAll = () => {
-    setTwelveRecipes(filteredMeal);
-    twelveRecipes.forEach((teste) => {
-      console.log(teste);
-    });
+    setTwelveMeals(twelveMealsArray);
   };
 
   useEffect(() => {
-    fetchRecipes();
-  }, [fetchRecipes]);
+    dispatch(getMealsThunk());
+    dispatch(getMealsCategoriesThunk());
+  }, [dispatch]);
 
   return (
     <Layout title="Foods">
@@ -80,47 +74,42 @@ const Foods = () => {
       >
         All
       </button>
+      <div>
+        {
+          isFetchingCategories ? <Loading />
+            : mealCategories.map((category) => (
+              <span key={ category.strCategory }>
+                <button
+                  type="button"
+                  data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => buttonOfCategories(category.strCategory) }
+                >
+                  { category.strCategory }
+                </button>
+              </span>))
+        }
+      </div>
+      {isFetchingMeals && <Loading />}
       {
-        foodCategories.map((category) => (
-          <div key={ category.strCategory }>
-            <button
-              type="button"
-              data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => buttonOfCategories(category.strCategory) }
-            >
-              { category.strCategory }
-            </button>
-          </div>))
+        !twelveSearched && !mealsByIngredients
+          && twelveMeals.map((food, index) => (
+            <Link key={ food.idMeal } to={ `/foods/${food.idMeal}` }>
+              <Card
+                index={ index }
+                image={ food.strMealThumb }
+                title={ food.strMeal }
+              />
+            </Link>
+          ))
       }
-      {searchClicked && <SearchHeader location={ location } />}
       {
-        meals
-        && (
-          <RecipeSearchFood
-            recipes={ meals }
-            history={ history }
-          />
-        )
-      }
-      { (!searchClicked && !mealsByIngredients)
-        ? (twelveRecipes.map((recipe, index) => (
-          <Link
-            key={ recipe.idMeal }
-            to={ `/foods/${recipe.idMeal}` }
-          >
-            <Card
-              index={ index }
-              image={ recipe.strMealThumb }
-              title={ recipe.strMeal }
+        (twelveSearched || mealsByIngredients)
+          && (
+            <RecipeSearchFood
+              recipes={ twelveSearched || mealsByIngredients }
             />
-          </Link>
-        ))) : (
-          <RecipeSearchFood
-            recipes={ mealsByIngredients }
-            history={ history }
-          />
-        )}
-
+          )
+      }
     </Layout>
   );
 };

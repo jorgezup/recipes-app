@@ -8,9 +8,9 @@ const foodsAPI = (food) => ({
   food,
 });
 
-export const buttonSearchClicked = (bool) => ({
+export const buttonSearchClicked = (payload) => ({
   type: 'SEARCH_CLICKED',
-  bool,
+  payload,
 });
 
 const foodsByIngredient = (ingredient) => ({
@@ -43,7 +43,7 @@ export const foodSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch) 
         .then((response) => response.json())
         .then((data) => {
           if (data.meals === null) {
-            global.alert(noRecipleFound);
+            global.alert(noRecipeFound);
           }
           dispatch(foodsAPI(data));
         })
@@ -70,7 +70,9 @@ export const drinkSearchAPI = (searchRecipe, radio, exactLocation) => (dispatch)
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          global.alert(noRecipleFound);
+          if (data.drinks === null) {
+            global.alert(noRecipeFound);
+          }
           dispatch(foodsAPI(data));
         })
     );

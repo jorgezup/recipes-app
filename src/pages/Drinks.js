@@ -1,55 +1,51 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import SearchHeader from '../components/SearchHeader';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Loading from '../components/Loading';
 import Card from '../components/Card';
 import RecipeSearchDrink from '../components/RecipeSearchDrink';
+import { getDrinksThunk } from '../Redux/actions/drinks';
+import { getDrinksCategoriesThunk } from '../Redux/actions/drinksCategories';
+import { fetchDrinksByCategory } from '../services/api';
 
 const LIMIT_DRINKS = 12;
 const LIMIT_CATEGORIES = 5;
 
 const Drinks = () => {
-  const history = useHistory();
-  const { location } = history;
-  const [twelveDrinks, setTwelveDrinks] = useState([]);
-  const [drinkCategories, setDrinkCategories] = useState([]);
+  const dispatch = useDispatch();
   const [nameDrinkCategory, setNameDrinkCategory] = useState('');
-  const [filteredDrink, setFilteredDrink] = useState([]);
-  const searchClicked = useSelector((state) => state.searchClicked);
-  const { drinks } = useSelector((state) => state.recipeSearch);
+  const [twelveDrinks, setTwelveDrinks] = useState([]);
+
+  const {
+    drinks,
+    isFetching: isFetchingDrinks,
+  } = useSelector((state) => state.drinks);
+  const {
+    categories,
+    isFetching: isFetchingCategories,
+  } = useSelector((state) => state.drinksCategories);
+  const { drinks: searchedDrinks } = useSelector((state) => state.recipeSearch);
   const { drinks: drinkByIngredients } = useSelector((state) => state.byIngredientsDrink);
 
-  const fetchDrinks = useCallback(async () => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    const data = await response.json();
-    const filteredDrinks = data.drinks.slice(0, LIMIT_DRINKS);
-    setFilteredDrink(filteredDrinks);
-    setTwelveDrinks(filteredDrinks);
-  }, []);
+  const twelveDrinksArray = drinks.slice(0, LIMIT_DRINKS);
+  const drinkCategories = categories.slice(0, LIMIT_CATEGORIES);
+  const twelveSearched = searchedDrinks?.slice(0, LIMIT_DRINKS);
+  const twelveByIngredients = drinkByIngredients?.slice(0, LIMIT_DRINKS);
 
   useEffect(() => {
-    const getDrinksCategories = async () => {
-      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-      const data = await response.json();
-      const reduceData = data.drinks.reduce((acc, curl, index) => {
-        if (index < LIMIT_CATEGORIES) acc.push(curl);
-        return acc;
-      }, []);
-      setDrinkCategories(reduceData);
-    };
-    getDrinksCategories();
-  }, []);
+    setTwelveDrinks(drinks.slice(0, LIMIT_DRINKS));
+  }, [drinks]);
 
   const getByCategory = async (drinkCategory) => {
-    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${drinkCategory}`);
-    const data = await response.json();
-    const reduceData = data.drinks.reduce((acc, curl, index) => {
+    const { drinks: drinksByCategory } = await fetchDrinksByCategory(drinkCategory);
+    const reduceData = drinksByCategory.reduce((acc, curl, index) => {
       if (index < LIMIT_DRINKS) acc.push(curl);
       return acc;
     }, []);
+
     if (drinkCategory === nameDrinkCategory) {
-      setTwelveDrinks(filteredDrink);
+      setTwelveDrinks(twelveDrinksArray);
       setNameDrinkCategory('');
     }
     if (drinkCategory !== nameDrinkCategory) setTwelveDrinks(reduceData);
@@ -61,12 +57,13 @@ const Drinks = () => {
   };
 
   const buttonAll = () => {
-    setTwelveDrinks(filteredDrink);
+    setTwelveDrinks(twelveDrinksArray);
   };
 
   useEffect(() => {
-    fetchDrinks();
-  }, [fetchDrinks]);
+    dispatch(getDrinksThunk());
+    dispatch(getDrinksCategoriesThunk());
+  }, [dispatch]);
 
   return (
     <Layout title="Drinks">
@@ -77,46 +74,44 @@ const Drinks = () => {
       >
         All
       </button>
+      <div>
+        {
+          isFetchingCategories ? <Loading />
+            : drinkCategories.map((category) => (
+              <span key={ category.strCategory }>
+                <button
+                  type="button"
+                  data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => buttonOfCategories(category.strCategory) }
+                >
+                  { category.strCategory }
+                </button>
+              </span>))
+        }
+      </div>
+      {isFetchingDrinks && <Loading />}
       {
-        drinkCategories.map((category) => (
-          <div key={ category.strCategory }>
-            <button
-              type="button"
-              data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => buttonOfCategories(category.strCategory) }
-            >
-              { category.strCategory }
-            </button>
-          </div>))
+        !twelveSearched && !twelveByIngredients
+          && twelveDrinks.map((drink, index) => (
+            <Link key={ drink.idDrink } to={ `/drinks/${drink.idDrink}` }>
+              <Card
+                index={ index }
+                image={ drink.strDrinkThumb }
+                title={ drink.strDrink }
+              />
+            </Link>
+          ))
       }
-      {searchClicked && <SearchHeader location={ location } />}
       {
-        drinks
-        && (
-          <RecipeSearchDrink
-            recipes={ drinks }
-            history={ history }
-          />
-        )
-      }
-      { (!searchClicked && !drinkByIngredients)
-        ? (twelveDrinks.map((drink, index) => (
-          <Link
-            key={ drink.idDrink }
-            to={ `/drinks/${drink.idDrink}` }
-          >
-            <Card
-              index={ index }
-              image={ drink.strDrinkThumb }
-              title={ drink.strDrink }
+        /* TODO -> pensar sobre reutilizar o componente de Card
+        não é necessário o uso deste componente RecipeSearchDrink */
+        (twelveSearched || twelveByIngredients)
+          && (
+            <RecipeSearchDrink
+              recipes={ twelveSearched || twelveByIngredients }
             />
-          </Link>
-        ))) : (
-          <RecipeSearchDrink
-            recipes={ drinkByIngredients }
-            history={ history }
-          />
-        )}
+          )
+      }
     </Layout>
   );
 };
