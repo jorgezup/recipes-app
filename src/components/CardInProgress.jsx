@@ -75,6 +75,12 @@ const CardInProgress = ({ recipe }) => {
     }
   };
 
+  const isRecipeAlreadyFinished = () => ingredientNames.length;
+
+  const handleFinishButton = () => {
+    history.push('/done-recipes');
+  };
+
   const { meals: localStorage } = getRecipesInProgress();
 
   return (
@@ -117,7 +123,14 @@ const CardInProgress = ({ recipe }) => {
           alt="icon-favorite"
         />
       </button>
-      <button data-testid="finish-recipe-btn" type="button">
+      <button
+        data-testid="finish-recipe-btn"
+        type="button"
+        disabled={
+          isRecipeAlreadyFinished() < recipe.ingredients.length
+        }
+        onClick={ handleFinishButton }
+      >
         Finalizar
       </button>
     </div>
