@@ -12,11 +12,13 @@ const DrinkInProgress = () => {
   const { drinks, isFetching } = useSelector((state) => state.drinkById);
 
   const recipe = {
-    title: drinks[0]?.strMeal,
-    image: drinks[0]?.strMealThumb,
+    id: drinks[0]?.idDrink,
+    title: drinks[0]?.strDrink,
+    image: drinks[0]?.strDrinkThumb,
     category: drinks[0]?.strCategory,
     instructions: drinks[0]?.strInstructions,
     ingredients: setIngredientsArray(drinks[0] || {}),
+    alcoholic: drinks[0]?.strAlcoholic,
   };
 
   useEffect(() => {
