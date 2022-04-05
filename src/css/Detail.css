@@ -4,10 +4,14 @@
   border: none;
   border-radius: 10px;
   box-shadow: 4px 4px 8px -4px black;
+  color: black;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 150px;
+  justify-content: center;
   margin: 0 10px 60px;
+  text-align: center;
+  text-decoration: none;
   width: 100px;
 }
 
@@ -23,14 +27,17 @@
   font-family: Poppins , sans-serif;
   font-size: 15px;
   margin-top: 10px;
+  text-align: center;
 }
 
 .recomendation-image {
   border-radius: 8px;
   margin-top: 15px;
+  width: 100px;
 }
 
 .recomended-drinks {
+  align-items: center;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: scroll;

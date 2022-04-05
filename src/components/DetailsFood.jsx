@@ -145,11 +145,12 @@ const Details = ({ recipe, recommendations, history }) => {
             {
               recommendations.map((recommendation, index) => (
                 <Link
-                  to={ `/drinks/${id}` }
+                  to={ `/drinks/${recommendation.id}` }
                   key={ index }
+                  className="recomendation-cards"
                   data-testid={ `${index}-recomendation-card` }
                 >
-                  <div className="recomendation-cards">
+                  <div>
                     <p data-testid={ `${index}-recomendation-title` }>
                       {recommendation.name}
                     </p>
