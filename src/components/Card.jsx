@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import '../css/Card.css';
 
 const Card = ({ title, image, index }) => (
-  <div data-testid={ `${index}-recipe-card` }>
-    <h3 data-testid={ `${index}-card-name` }>{title}</h3>
+  <div className="card-foods" data-testid={ `${index}-recipe-card` }>
     <img
       data-testid={ `${index}-card-img` }
       src={ image }
       alt=""
-      style={ { width: '100%' } }
     />
+    <h3 data-testid={ `${index}-card-name` } className="name-food">{title}</h3>
   </div>
 );
 
