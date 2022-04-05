@@ -1,0 +1,14 @@
+.footer {
+  background-color: rgb(255, 137, 41);
+  bottom: 0;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  position: fixed;
+  width: 360px;
+}
+
+.cocktails, .explore, .foods {
+  background: transparent;
+  border: none;
+}

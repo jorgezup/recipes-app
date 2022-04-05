@@ -8,6 +8,7 @@ import { getMealsThunk } from '../Redux/actions/meals';
 import { getMealsCategoriesThunk } from '../Redux/actions/mealsCategories';
 import Loading from '../components/Loading';
 import { fetchMealsByCategory } from '../services/api';
+import '../css/Foods.css';
 
 const LIMIT_MEALS = 12;
 const LIMIT_CATEGORIES = 5;
@@ -67,33 +68,40 @@ const Foods = () => {
 
   return (
     <Layout title="Foods">
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ () => buttonAll() }
-      >
-        All
-      </button>
-      <div>
+      <div className="categories-foods">
+        <button
+          type="button"
+          className="categories"
+          data-testid="All-category-filter"
+          onClick={ () => buttonAll() }
+        >
+          All
+        </button>
+        <div>
+          {
+            isFetchingCategories ? <Loading />
+              : mealCategories.map((category) => (
+                <span key={ category.strCategory }>
+                  <button
+                    type="button"
+                    className="categories"
+                    data-testid={ `${category.strCategory}-category-filter` }
+                    onClick={ () => buttonOfCategories(category.strCategory) }
+                  >
+                    { category.strCategory }
+                  </button>
+                </span>))
+          }
+        </div>
+        {isFetchingMeals && <Loading />}
         {
-          isFetchingCategories ? <Loading />
-            : mealCategories.map((category) => (
-              <span key={ category.strCategory }>
-                <button
-                  type="button"
-                  data-testid={ `${category.strCategory}-category-filter` }
-                  onClick={ () => buttonOfCategories(category.strCategory) }
-                >
-                  { category.strCategory }
-                </button>
-              </span>))
-        }
-      </div>
-      {isFetchingMeals && <Loading />}
-      {
-        !twelveSearched && !mealsByIngredients
+          !twelveSearched && !mealsByIngredients
           && twelveMeals.map((food, index) => (
-            <Link key={ food.idMeal } to={ `/foods/${food.idMeal}` }>
+            <Link
+              className="link-card-foods"
+              key={ food.idMeal }
+              to={ `/foods/${food.idMeal}` }
+            >
               <Card
                 index={ index }
                 image={ food.strMealThumb }
@@ -101,15 +109,16 @@ const Foods = () => {
               />
             </Link>
           ))
-      }
-      {
-        (twelveSearched || mealsByIngredients)
+        }
+        {
+          (twelveSearched || mealsByIngredients)
           && (
             <RecipeSearchFood
               recipes={ twelveSearched || mealsByIngredients }
             />
           )
-      }
+        }
+      </div>
     </Layout>
   );
 };

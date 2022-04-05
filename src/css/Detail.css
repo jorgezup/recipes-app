@@ -1,19 +1,139 @@
 .recomendation-cards {
   align-items: center;
+  background-color: #e5e5e5;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px -4px black;
   display: flex;
   flex-direction: column;
   height: 200px;
-  margin: 0 10px;
-  width: 200px;
+  margin: 0 10px 60px;
+  width: 100px;
+}
+
+.img-shadow img {
+  box-shadow: 6px 6px 8px -6px black;
+}
+
+.recomendation-cards:hover {
+  box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
+}
+
+.recomendation-title {
+  font-family: Poppins , sans-serif;
+  font-size: 15px;
+  margin-top: 10px;
 }
 
 .recomendation-image {
-  height: 150px;
-  width: 140px;
+  border-radius: 8px;
+  margin-top: 15px;
 }
 
 .recomended-drinks {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: scroll;
+}
+
+.recipe-photo {
+  width: 300px;
+}
+
+.details-container h2 {
+  color: rgb(207, 102, 3);
+  font-family: Comfortaa , cursive;
+  font-size: 30px;
+  margin: 30px;
+  text-align: center;
+}
+
+.recipe {
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.recipe ul {
+  margin: 30px;
+}
+
+.recipe p {
+  margin: 30px 10px;
+}
+
+.details-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.share-favorite {
+  display: flex;
+  justify-content: space-around;
+}
+
+.share-favorite button img {
+  height: 30px;
+  width: 30px;
+}
+
+.share-favorite button {
+  background: transparent;
+  border: none;
+  margin: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+}
+
+iframe {
+  height: 300px;
+  margin-bottom: 60px;
+  width: 300px;
+}
+
+.button-start-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-start {
+  background-color: rgb(255, 208, 0);
+  border: 2px solid #fc8600;
+  bottom: 0;
+  color: rgb(77, 37, 0);
+  font-family: Fredoka One , cursive;
+  font-size: 16px;
+  overflow: hidden;
+  padding: 0.5em 4.3em;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.3s;
+  z-index: 1;
+}
+
+.button-start:before {
+  background: #fc8600;
+  content: '';
+  display: block;
+  height: 800%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: 1s ease;
+  width: 0;
+  z-index: -1;
+}
+
+.button-start:hover:before {
+  width: 105%;
+}
+
+.button-start:hover {
+  color: #111;
 }

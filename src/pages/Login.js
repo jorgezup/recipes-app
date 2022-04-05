@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { emailValidation } from '../Redux/actions';
+import '../css/Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -46,12 +47,13 @@ class Login extends React.Component {
       render() {
         const { email, enabledEmail, enabledPassword } = this.state;
         return (
-          <div>
+          <div className="login-container">
             <label htmlFor="input-email">
               Email:
               <input
                 onChange={ this.enabledEmail }
                 type="email"
+                className="email"
                 id="input-email"
                 data-testid="email-input"
               />
@@ -61,6 +63,7 @@ class Login extends React.Component {
               <input
                 onChange={ this.enabledPassword }
                 type="password"
+                className="password"
                 id="input-password"
                 data-testid="password-input"
               />
@@ -69,6 +72,7 @@ class Login extends React.Component {
               type="button"
               onClick={ () => this.handleClick(email) }
               to="/foods"
+              className="submit"
               disabled={ !(enabledEmail && enabledPassword) }
               data-testid="login-submit-btn"
             >
