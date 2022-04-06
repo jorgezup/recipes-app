@@ -5,13 +5,27 @@
 
 .login-container {
   align-items: center;
+  background-image: url('../images/background1.png');
   display: flex;
   flex-direction: column;
+  height: 640px;
   justify-content: center;
-  margin-top: 290px;
+  width: 360px;
+
 }
 
-.login-container input {
+.login-form {
+  align-items: center;
+  background-color: rgba(173, 172, 172, 0.466);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-top: 290px;
+  width: 300px;
+}
+
+.login-form input {
   background: none;
   border: none;
   border-bottom: 1px solid rgb(167, 108, 0);
@@ -23,13 +37,13 @@
   text-align: center;
 }
 
-.login-container input:focus {
+.login-form input:focus {
   background: none;
   border-bottom: 3px solid #ff5e00;
   outline: none;
 }
 
-.login-container label {
+.login-form label {
   color: rgb(126, 125, 125);
   display: flex;
   flex-direction: column;
