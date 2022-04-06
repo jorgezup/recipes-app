@@ -36,11 +36,12 @@
   width: 100px;
 }
 
-.recomended-drinks {
+.recomended-foods, .recomended-drinks {
   align-items: center;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: scroll;
+  width: 360px;
 }
 
 .recipe-photo {

@@ -1,0 +1,28 @@
+h1 {
+  text-align: center;
+}
+
+.container-ingredients-foods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 90px 0;
+}
+
+.card-foods-ingredients {
+  align-items: center;
+  background-color: #e5e5e5;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px -4px black;
+  display: flex;
+  flex-direction: column;
+  height: 130px;
+  justify-content: center;
+  margin: 10px;
+  width: 130px;
+}
+
+.card-foods-ingredients:hover {
+  box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
+}

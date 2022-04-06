@@ -61,6 +61,7 @@ const Header = ({ title }) => {
           </button>
         )}
       </header>
+      <div className="margin" />
       {
         isSearchHeaderOpen && <SearchHeader />
       }

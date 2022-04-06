@@ -15,7 +15,7 @@ let recipeStarted = {
   meals: {},
 };
 
-const Details = ({ recipe, recommendations, history }) => {
+const DetailsFood = ({ recipe, recommendations, history }) => {
   const [buttonShare, setButtonShare] = useState(false);
   const [favorites, setFavorites] = useState(false);
   // const handleClickCardRecomendation = (id) => {
@@ -182,8 +182,10 @@ const Details = ({ recipe, recommendations, history }) => {
   );
 };
 
-Details.propTypes = {
+DetailsFood.propTypes = {
   recipe: PropTypes.arrayOf(Object),
+  recommendations: PropTypes.arrayOf(Object),
+  history: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
-export default Details;
+export default DetailsFood;
