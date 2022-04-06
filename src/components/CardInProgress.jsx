@@ -81,7 +81,7 @@ const CardInProgress = ({ recipe }) => {
     history.push('/done-recipes');
   };
 
-  const { meals: localStorage } = getRecipesInProgress();
+  const { meals: local } = getRecipesInProgress();
 
   return (
     <div style={ { width: '360px' } }>
@@ -101,7 +101,7 @@ const CardInProgress = ({ recipe }) => {
                 type="checkbox"
                 name={ ingredient }
                 id={ ingredient }
-                checked={ localStorage[recipe.id]?.includes(ingredient) }
+                checked={ local[recipe.id]?.includes(ingredient) }
                 onChange={ () => handleCheckIngredient(recipe.id, ingredient) }
               />
               {ingredient}
@@ -129,7 +129,7 @@ const CardInProgress = ({ recipe }) => {
         disabled={
           isRecipeAlreadyFinished() < recipe.ingredients.length
         }
-        onClick={ handleFinishButton }
+        onClick={ () => handleFinishButton() }
       >
         Finalizar
       </button>

@@ -7,8 +7,8 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../css/Detail.css';
 
-// const doneRecipes = [{}];
-// const data = new Date();
+const data = new Date();
+
 let recipeStarted = {
   cocktails: {},
   meals: {},
@@ -20,36 +20,21 @@ const Details = ({ recipe, recommendations, history }) => {
   const handleClickCardRecomendation = (id) => {
     history.push(`/drinks/${id}`);
   };
-  //  RECEITAS FINALIZADAS
-  // const sendDoneRecipe = () => {
-  //   if (location === '/foods') {
-  //     doneRecipes = [{
-  //       id: recipe.idMeal,
-  //       type: 'food',
-  //       nationality: recipe.strArea,
-  //       category: recipe.strCategory,
-  //       alcoholicOrNot: '',
-  //       name: recipe.name,
-  //       image: recipe.image,
-  //       doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-  //       tags: recipe.strTags,
-  //     }];
-  //     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  //   } else {
-  //     doneRecipes = [{
-  //       id: recipe.idDrink,
-  //       type: 'drink',
-  //       nationality: '',
-  //       category: recipe.strCategory,
-  //       alcoholicOrNot: recipe.alcoholic,
-  //       name: recipe.name,
-  //       image: recipe.image,
-  //       doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-  //       tags: [],
-  //     }];
-  //     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  //   }
-  // };
+
+  const sendDoneRecipe = () => {
+    const doneRecipes = [{
+      id: recipe.idMeal,
+      type: 'food',
+      nationality: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.name,
+      image: recipe.image,
+      doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
+      tags: recipe.strTags.split(','),
+    }];
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+  };
   const getFavoritesLocal = () => JSON.parse(localStorage.getItem('favoriteRecipes'))
   || [];
 
@@ -70,6 +55,7 @@ const Details = ({ recipe, recommendations, history }) => {
   };
 
   const clickStartRecipe = () => {
+    sendDoneRecipe();
     inProgressRecipes();
     history.push(`/foods/${recipe.idMeal}/in-progress`);
   };
