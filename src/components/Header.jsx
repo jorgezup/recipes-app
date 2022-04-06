@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -13,27 +13,27 @@ const Header = ({ title }) => {
     location: { pathname },
   } = history;
 
-  const [showSearchIcon, setShowSearchIcon] = useState(false);
+  const [showSearchIcon, setShowSearchIcon] = useState(undefined);
   const [isSearchHeaderOpen, setSearchHeaderOpen] = useState(false);
 
   const toggleSearchHeader = () => {
     setSearchHeaderOpen(!isSearchHeaderOpen);
   };
 
-  useEffect(() => {
-    const getLocation = () => {
-      if (
-        pathname === '/foods'
+  const getLocation = () => {
+    if (
+      pathname === '/foods'
         || pathname === '/drinks'
         || pathname === '/explore/foods/nationalities'
-      ) {
-        setShowSearchIcon(true);
-      } else {
-        setShowSearchIcon(false);
-      }
-    };
-    getLocation();
-  }, [pathname]);
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  if (showSearchIcon === undefined) {
+    setShowSearchIcon(getLocation());
+  }
 
   return (
     <div className="header">
