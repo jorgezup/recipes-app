@@ -31,7 +31,7 @@ const Details = ({ recipe, recommendations, history }) => {
       name: recipe.name,
       image: recipe.image,
       doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-      tags: recipe.strTags.split(','),
+      tags: recipe.strTags?.split(','),
     }];
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
   };
