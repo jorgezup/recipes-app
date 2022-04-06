@@ -1,0 +1,33 @@
+.container-drinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.link-card-drinks {
+  color: black;
+  font-family: Myriad Pro , serif;
+  text-decoration: none;
+}
+
+.categories-drinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 80px;
+}
+
+.categories {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px -4px black;
+  margin: 5px;
+  padding: 8px;
+  width: 110px;
+}
+
+.categories:hover {
+  box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
+}

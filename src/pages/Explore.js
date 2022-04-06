@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
+import '../css/Explore.css';
 
 const Explore = () => {
   const history = useHistory();
@@ -13,20 +14,24 @@ const Explore = () => {
 
   return (
     <Layout title="Explore">
-      <button
-        type="button"
-        data-testid="explore-foods"
-        onClick={ handleClickFoods }
-      >
-        Explore Foods
-      </button>
-      <button
-        type="button"
-        data-testid="explore-drinks"
-        onClick={ handleClickDrinks }
-      >
-        Explore Drinks
-      </button>
+      <div className="explore-container">
+        <button
+          type="button"
+          className="explore-btn"
+          data-testid="explore-foods"
+          onClick={ handleClickFoods }
+        >
+          Explore Foods
+        </button>
+        <button
+          type="button"
+          className="explore-btn"
+          data-testid="explore-drinks"
+          onClick={ handleClickDrinks }
+        >
+          Explore Drinks
+        </button>
+      </div>
     </Layout>
   );
 };

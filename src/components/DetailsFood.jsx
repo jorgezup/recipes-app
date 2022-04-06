@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -17,39 +18,10 @@ let recipeStarted = {
 const Details = ({ recipe, recommendations, history }) => {
   const [buttonShare, setButtonShare] = useState(false);
   const [favorites, setFavorites] = useState(false);
-  const handleClickCardRecomendation = (id) => {
-    history.push(`/drinks/${id}`);
-  };
-  //  RECEITAS FINALIZADAS
-  // const sendDoneRecipe = () => {
-  //   if (location === '/foods') {
-  //     doneRecipes = [{
-  //       id: recipe.idMeal,
-  //       type: 'food',
-  //       nationality: recipe.strArea,
-  //       category: recipe.strCategory,
-  //       alcoholicOrNot: '',
-  //       name: recipe.name,
-  //       image: recipe.image,
-  //       doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-  //       tags: recipe.strTags,
-  //     }];
-  //     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  //   } else {
-  //     doneRecipes = [{
-  //       id: recipe.idDrink,
-  //       type: 'drink',
-  //       nationality: '',
-  //       category: recipe.strCategory,
-  //       alcoholicOrNot: recipe.alcoholic,
-  //       name: recipe.name,
-  //       image: recipe.image,
-  //       doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-  //       tags: [],
-  //     }];
-  //     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  //   }
+  // const handleClickCardRecomendation = (id) => {
+  //   history.push(`/drinks/${id}`);
   // };
+
   const getFavoritesLocal = () => JSON.parse(localStorage.getItem('favoriteRecipes'))
   || [];
 
@@ -57,7 +29,7 @@ const Details = ({ recipe, recommendations, history }) => {
     const getFavorites = getFavoritesLocal()
       .some((favorite) => favorite.id.includes(recipe.idMeal));
     setFavorites(getFavorites);
-  }, [recipe.idMeal]);
+  }, []);
 
   const inProgressRecipes = () => {
     recipeStarted = ({
@@ -103,89 +75,105 @@ const Details = ({ recipe, recommendations, history }) => {
   };
 
   return (
-    <div style={ { width: '360px' } }>
+    <div className="container">
       {recipe ? (
         <div>
-          <h2 data-testid="recipe-title">{recipe.name}</h2>
-          <img
-            data-testid="recipe-photo"
-            src={ recipe.image }
-            alt={ `Imagem da receita ${recipe.name}` }
-            style={ { width: '100%' } }
-          />
-          <button data-testid="share-btn" type="button" onClick={ shareButton }>
-            <img src={ shareIcon } alt="icon-share" />
-          </button>
-          <button type="button" onClick={ favoriteButton }>
-            <img
-              data-testid="favorite-btn"
-              src={ favorites ? blackHeartIcon : whiteHeartIcon }
-              alt="icon-favorite"
-            />
-          </button>
-          {
-            buttonShare && <span>Link copied!</span>
-          }
-          {
-            recipe.alcoholic
-              ? <p data-testid="recipe-category">{recipe.alcoholic}</p>
-              : <p data-testid="recipe-category">{recipe.strCategory}</p>
-          }
-          <ul>
-            {recipe.ingredientsAndMeasure.map((ingredient, index) => (
-              <li
-                key={ index }
-                data-testid={ `${index}-ingredient-name-and-measure` }
+          <div className="details-container">
+            <h2 data-testid="recipe-title">{recipe.name}</h2>
+            <div className="img-shadow">
+              <img
+                data-testid="recipe-photo"
+                className="recipe-photo"
+                src={ recipe.image }
+                alt={ `Imagem da receita ${recipe.name}` }
+              />
+            </div>
+            <div className="share-favorite">
+              <button data-testid="share-btn" type="button" onClick={ shareButton }>
+                <img src={ shareIcon } alt="icon-share" />
+              </button>
+              <button type="button" onClick={ favoriteButton }>
+                <img
+                  data-testid="favorite-btn"
+                  src={ favorites ? blackHeartIcon : whiteHeartIcon }
+                  alt="icon-favorite"
+                />
+              </button>
+            </div>
+            {
+              buttonShare && <span>Link copied!</span>
+            }
+            {
+              recipe.alcoholic
+                ? <p data-testid="recipe-category">{recipe.alcoholic}</p>
+                : <p data-testid="recipe-category">{recipe.strCategory}</p>
+            }
+            <div className="recipe">
+              <ul>
+                {recipe.ingredientsAndMeasure.map((ingredient, index) => (
+                  <li
+                    key={ index }
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    {`${ingredient.ingrediente} ${ingredient.measure || ''} `}
+                  </li>
+                ))}
+              </ul>
+              <p
+                className="how-to-do"
+                data-testid="instructions"
               >
-                {`${ingredient.ingrediente} ${ingredient.measure || ''} `}
-              </li>
-            ))}
-          </ul>
-          <p data-testid="instructions">{recipe.strInstructions}</p>
-          {recipe.videoId && (
-            <iframe
-              data-testid="video"
-              title={ `Video sobre a receita ${recipe.name}` }
-              src={ `https://www.youtube.com/embed/${recipe.videoId}` }
-              frameBorder="0"
-              width="100%"
-            />
-          )}
+                {recipe.strInstructions}
+
+              </p>
+
+            </div>
+
+            {recipe.videoId && (
+              <iframe
+                data-testid="video"
+                title={ `Video sobre a receita ${recipe.name}` }
+                src={ `https://www.youtube.com/embed/${recipe.videoId}` }
+                frameBorder="0"
+                width="100%"
+              />
+            )}
+          </div>
 
           <div className="recomended-drinks">
             {/* TODO Card para recomendaçoes */}
             {
               recommendations.map((recommendation, index) => (
-                <button
-                  type="button"
+                <Link
+                  to={ `/drinks/${recommendation.id}` }
                   key={ index }
                   className="recomendation-cards"
                   data-testid={ `${index}-recomendation-card` }
-                  onClick={ () => handleClickCardRecomendation(recommendation.id) }
                 >
-                  <p data-testid={ `${index}-recomendation-title` }>
-                    {recommendation.name}
-                  </p>
-                  <img
-                    src={ recommendation.image }
-                    className="recomendation-image"
-                    alt="recomendation-img"
-                  />
-                </button>
+                  <div>
+                    <p data-testid={ `${index}-recomendation-title` }>
+                      {recommendation.name}
+                    </p>
+                    <img
+                      src={ recommendation.image }
+                      className="recomendation-image"
+                      alt="recomendation-img"
+                    />
+                  </div>
+                </Link>
               ))
             }
           </div>
-          <button
-            data-testid="start-recipe-btn"
-            type="button"
-            onClick={ clickStartRecipe }
-            style={ {
-              position: 'fixed',
-              bottom: 0,
-            } }
-          >
-            Continue Recipe
-          </button>
+          <div className="button-start-container">
+            <button
+              data-testid="start-recipe-btn"
+              type="button"
+              className="button-start"
+              onClick={ clickStartRecipe }
+            >
+              Continue Recipe
+            </button>
+          </div>
         </div>
       ) : (
         <Loading />
