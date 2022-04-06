@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { buttonSearchClicked, drinkSearchAPI, foodSearchAPI } from '../Redux/actions';
+import '../css/Search.css';
 
 const SearchHeader = () => {
   const [searchRecipe, setSearchRecipe] = useState('');
@@ -45,49 +46,56 @@ const SearchHeader = () => {
   };
 
   return (
-    <section>
+    <section className="form">
       <input
         type="text"
         name="searchRecipe"
+        className="search-input"
         data-testid="search-input"
         value={ searchRecipe }
         onChange={ handleSearch }
       />
-      <label htmlFor="ingredient">
-        <input
-          type="radio"
-          name="radio"
-          id="ingredient"
-          data-testid="ingredient-search-radio"
-          value={ radio }
-          onChange={ handleChanges }
-        />
-        Ingredient
-      </label>
-      <label htmlFor="nameSearch">
-        <input
-          type="radio"
-          name="radio"
-          id="nameSearch"
-          value={ radio }
-          data-testid="name-search-radio"
-          onChange={ handleChanges }
-        />
-        Name
-      </label>
-      <label htmlFor="firstLetter">
-        <input
-          type="radio"
-          name="radio"
-          id="firstLetter"
-          value={ radio }
-          data-testid="first-letter-search-radio"
-          onChange={ handleChanges }
-        />
-        First Letter
-      </label>
+      <div className="radio-btn">
+        <label htmlFor="ingredient">
+          <input
+            type="radio"
+            name="radio"
+            className="radio"
+            id="ingredient"
+            data-testid="ingredient-search-radio"
+            value={ radio }
+            onChange={ handleChanges }
+          />
+          Ingredient
+        </label>
+        <label htmlFor="nameSearch">
+          <input
+            type="radio"
+            name="radio"
+            className="radio"
+            id="nameSearch"
+            value={ radio }
+            data-testid="name-search-radio"
+            onChange={ handleChanges }
+          />
+          Name
+        </label>
+        <label htmlFor="firstLetter">
+          <input
+            type="radio"
+            name="radio"
+            className="radio"
+            id="firstLetter"
+            value={ radio }
+            data-testid="first-letter-search-radio"
+            onChange={ handleChanges }
+          />
+          First Letter
+        </label>
+      </div>
       <button
         type="button"
+        className="search-btn"
         data-testid="exec-search-btn"
         onClick={ handleClick }
       >

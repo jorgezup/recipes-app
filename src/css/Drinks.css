@@ -1,8 +1,8 @@
 .container-drinks {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 20px;
+  justify-content: space-evenly;
+  margin: 20px 0 70px;
 }
 
 .link-card-drinks {
@@ -14,8 +14,7 @@
 .categories-drinks {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-top: 80px;
+  justify-content: space-evenly;
 }
 
 .categories {

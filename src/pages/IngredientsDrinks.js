@@ -33,23 +33,26 @@ const IngredientsDrinks = () => {
   return (
 
     <Layout title="Explore Ingredients">
-      {
-        ingredients && ingredients.map((ingredient, index) => (
-          <button
-            type="button"
-            key={ index }
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => handleClickCard(ingredient.strIngredient1) }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
-              alt="ingredient"
-            />
-            <p data-testid={ `${index}-card-name` }>{ingredient.strIngredient1}</p>
-          </button>
-        ))
-      }
+      <div className="container-ingredients-foods">
+        {
+          ingredients && ingredients.map((ingredient, index) => (
+            <button
+              type="button"
+              key={ index }
+              className="card-foods-ingredients"
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => handleClickCard(ingredient.strIngredient1) }
+            >
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
+                alt="ingredient"
+              />
+              <p data-testid={ `${index}-card-name` }>{ingredient.strIngredient1}</p>
+            </button>
+          ))
+        }
+      </div>
     </Layout>
   );
 };

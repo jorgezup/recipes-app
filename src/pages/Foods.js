@@ -77,23 +77,23 @@ const Foods = () => {
         >
           All
         </button>
-        <div>
-          {
-            isFetchingCategories ? <Loading />
-              : mealCategories.map((category) => (
-                <span key={ category.strCategory }>
-                  <button
-                    type="button"
-                    className="categories"
-                    data-testid={ `${category.strCategory}-category-filter` }
-                    onClick={ () => buttonOfCategories(category.strCategory) }
-                  >
-                    { category.strCategory }
-                  </button>
-                </span>))
-          }
-        </div>
-        {isFetchingMeals && <Loading />}
+        {
+          isFetchingCategories ? <Loading />
+            : mealCategories.map((category) => (
+              <span key={ category.strCategory }>
+                <button
+                  type="button"
+                  className="categories"
+                  data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => buttonOfCategories(category.strCategory) }
+                >
+                  { category.strCategory }
+                </button>
+              </span>))
+        }
+      </div>
+      {isFetchingMeals && <Loading />}
+      <div className="container-foods">
         {
           !twelveSearched && !mealsByIngredients
           && twelveMeals.map((food, index) => (

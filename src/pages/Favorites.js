@@ -5,6 +5,7 @@ import clipboardCopy from 'clipboard-copy';
 import Layout from '../components/Layout';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import '../css/Favorites.css';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -84,52 +85,67 @@ const Favorites = () => {
       </button>
       {
         favorites.map((favorite, index) => (
-          <div key={ favorite.id }>
-            <Link to={ `/${favorite.type}s/${favorite.id}` }>
-              {
-                favorite.nationality !== '' ? (
-                  <p data-testid={ `${index}-horizontal-top-text` }>
-                    {`${favorite.nationality} - ${favorite.category}`}
-                  </p>)
-                  : (
-                    <p data-testid={ `${index}-horizontal-top-text` }>
-                      {favorite.alcoholicOrNot}
-                    </p>)
-              }
-              <h1 data-testid={ `${index}-horizontal-name` }>{favorite.name}</h1>
+          <div className="container-favorites" key={ favorite.id }>
+            <Link
+              className="favorites-card"
+              to={ `/${favorite.type}s/${favorite.id}` }
+            >
               <img
                 data-testid={ `${index}-horizontal-image` }
+                className="img-favorites"
                 src={ favorite.image }
                 alt={ favorite.name }
-                style={ {
-                  height: '100px',
-                  width: '100px',
-                } }
               />
+              <div className="type-name">
+                {
+                  favorite.nationality !== '' ? (
+                    <p
+                      className="type-favorites"
+                      data-testid={ `${index}-horizontal-top-text` }
+                    >
+                      {`${favorite.nationality} - ${favorite.category}`}
+                    </p>)
+                    : (
+                      <p
+                        className="type-favorites"
+                        data-testid={ `${index}-horizontal-top-text` }
+                      >
+                        {favorite.alcoholicOrNot}
+                      </p>)
+                }
+                <h1
+                  className="name-favorites"
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  {favorite.name}
+                </h1>
+              </div>
             </Link>
-            <button
-              type="button"
-              onClick={ () => shareButton(favorite.id, favorite.type) }
-            >
-              <img
-                data-testid={ `${index}-horizontal-share-btn` }
-                src={ shareIcon }
-                alt="icon-share"
-              />
-            </button>
-            {
-              buttonShare.includes(favorite.id) && <span>Link copied!</span>
-            }
-            <button
-              type="button"
-              onClick={ () => favoriteButton(favorite.id, favorite.type) }
-            >
-              <img
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ blackHeart }
-                alt="icon-favorite"
-              />
-            </button>
+            <div className="share-favorites">
+              <button
+                type="button"
+                onClick={ () => shareButton(favorite.id, favorite.type) }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  src={ shareIcon }
+                  alt="icon-share"
+                />
+              </button>
+              {
+                buttonShare.includes(favorite.id) && <span>Link copied!</span>
+              }
+              <button
+                type="button"
+                onClick={ () => favoriteButton(favorite.id, favorite.type) }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ blackHeart }
+                  alt="icon-favorite"
+                />
+              </button>
+            </div>
           </div>
         ))
       }

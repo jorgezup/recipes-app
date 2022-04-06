@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { foodByIngredient } from '../Redux/actions';
+import '../css/IngredientsFoodsDrinks.css';
 
 const MAX_INGREDIENTS = 12;
 
@@ -33,25 +34,35 @@ const Ingredients = () => {
   return (
 
     <Layout title="Explore Ingredients">
-      {
-        ingredients && ingredients.map((ingredient, index) => (
-          <button
-            type="button"
-            key={ index }
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => handleClickCard(ingredient.strIngredient) }
-          >
+      <div className="container-ingredients-foods">
+        {
+          ingredients && ingredients.map((ingredient, index) => (
+            <button
+              type="button"
+              className="card-foods-ingredients"
+              key={ index }
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => handleClickCard(ingredient.strIngredient) }
+            >
 
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
-              alt="ingredient"
-            />
-            <p data-testid={ `${index}-card-name` }>{ingredient.strIngredient}</p>
+              <img
+                data-testid={ `${index}-card-img` }
+                className="foods-ingredients-img"
+                src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
+                alt="ingredient"
+              />
+              <p
+                className="foods-ingredients-title"
+                data-testid={ `${index}-card-name` }
+              >
+                {ingredient.strIngredient}
 
-          </button>
-        ))
-      }
+              </p>
+
+            </button>
+          ))
+        }
+      </div>
     </Layout>
   );
 };
