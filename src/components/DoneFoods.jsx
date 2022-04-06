@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
+import '../css/DoneRecipes.css';
 
 const DoneFoods = ({ recipe, index }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -13,12 +15,15 @@ const DoneFoods = ({ recipe, index }) => {
 
   return (
     <section key={ recipe.id }>
-      <img
-        src={ recipe.image }
-        alt={ recipe.name }
-        data-testid={ `${index}-horizontal-image` }
-      />
-      <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
+      <Link to={ `/foods/${recipe.id}` }>
+        <img
+          src={ recipe.image }
+          alt={ recipe.name }
+          data-testid={ `${index}-horizontal-image` }
+          className="done-recipe-image"
+        />
+        <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
+      </Link>
       <h3 data-testid={ `${index}-horizontal-top-text` }>
         { recipe.nationality }
         { ' - ' }
@@ -54,7 +59,6 @@ DoneFoods.propTypes = {
     id: PropTypes.string,
     image: PropTypes.string,
     category: PropTypes.string,
-    title: PropTypes.string,
     name: PropTypes.string,
     doneDate: PropTypes.string,
     nationality: PropTypes.string,
