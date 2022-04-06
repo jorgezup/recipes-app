@@ -4,19 +4,15 @@ import { useHistory } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
 import MainWrapper from './MainWrapper';
+import '../css/Layout.css';
 
 const Layout = ({ title, children }) => {
   const { location: { pathname } } = useHistory();
   return (
     <div
-      style={ {
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        maxWidth: '360px',
-      } }
+      className="layout-page"
     >
-      <Header title={ title } />
+      <Header className="header" title={ title } />
       <MainWrapper>
         { children }
       </MainWrapper>

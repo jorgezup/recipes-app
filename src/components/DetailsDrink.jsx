@@ -14,7 +14,7 @@ let recipeStarted = {
   meals: {},
 };
 
-const Details = ({ recipe, recommendations, history }) => {
+const DetailsDrink = ({ recipe, recommendations, history }) => {
   const [buttonShare, setButtonShare] = useState(false);
   const [favorites, setFavorites] = useState(false);
   const handleClickCardRecomendation = (id) => {
@@ -93,26 +93,30 @@ const Details = ({ recipe, recommendations, history }) => {
   };
 
   return (
-    <div style={ { width: '360px' } }>
+    <div className="container">
       {recipe ? (
-        <div>
+        <div className="details-container">
           <h2 data-testid="recipe-title">{recipe.name}</h2>
-          <img
-            data-testid="recipe-photo"
-            src={ recipe.image }
-            alt={ `Imagem da receita ${recipe.name}` }
-            style={ { width: '100%' } }
-          />
-          <button data-testid="share-btn" type="button" onClick={ shareButton }>
-            <img src={ shareIcon } alt="icon-share" />
-          </button>
-          <button type="button" onClick={ favoriteButton }>
+          <div className="img-shadow">
             <img
-              data-testid="favorite-btn"
-              src={ favorites ? blackHeart : whiteHeart }
-              alt="icon-favorite"
+              data-testid="recipe-photo"
+              className="recipe-photo"
+              src={ recipe.image }
+              alt={ `Imagem da receita ${recipe.name}` }
             />
-          </button>
+          </div>
+          <div className="share-favorite">
+            <button data-testid="share-btn" type="button" onClick={ shareButton }>
+              <img src={ shareIcon } alt="icon-share" />
+            </button>
+            <button type="button" onClick={ favoriteButton }>
+              <img
+                data-testid="favorite-btn"
+                src={ favorites ? blackHeart : whiteHeart }
+                alt="icon-favorite"
+              />
+            </button>
+          </div>
           {
             buttonShare && <span>Link copied!</span>
           }
@@ -121,17 +125,25 @@ const Details = ({ recipe, recommendations, history }) => {
               ? <p data-testid="recipe-category">{recipe.alcoholic}</p>
               : <p data-testid="recipe-category">{recipe.strCategory}</p>
           }
-          <ul>
-            {recipe.ingredientsAndMeasure.map((ingredient, index) => (
-              <li
-                key={ index }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${ingredient.ingrediente} ${ingredient.measure || ''} `}
-              </li>
-            ))}
-          </ul>
-          <p data-testid="instructions">{recipe.strInstructions}</p>
+          <div className="recipe">
+            <ul>
+              {recipe.ingredientsAndMeasure.map((ingredient, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient.ingrediente} ${ingredient.measure || ''} `}
+                </li>
+              ))}
+            </ul>
+            <p
+              className="how-to-do"
+              data-testid="instructions"
+            >
+              {recipe.strInstructions}
+
+            </p>
+          </div>
           {recipe.videoId && (
             <iframe
               data-testid="video"
@@ -142,7 +154,7 @@ const Details = ({ recipe, recommendations, history }) => {
             />
           )}
 
-          <div className="recomended-drinks">
+          <div className="recomended-foods">
             {/* TODO Card para recomendaçoes */}
             {
               recommendations.map((recommendation, index) => (
@@ -165,17 +177,16 @@ const Details = ({ recipe, recommendations, history }) => {
               ))
             }
           </div>
-          <button
-            data-testid="start-recipe-btn"
-            type="button"
-            onClick={ clickStartRecipe }
-            style={ {
-              position: 'fixed',
-              bottom: 0,
-            } }
-          >
-            Continue Recipe
-          </button>
+          <div className="button-start-container">
+            <button
+              data-testid="start-recipe-btn"
+              type="button"
+              className="button-start"
+              onClick={ clickStartRecipe }
+            >
+              Continue Recipe
+            </button>
+          </div>
         </div>
       ) : (
         <Loading />
@@ -184,8 +195,10 @@ const Details = ({ recipe, recommendations, history }) => {
   );
 };
 
-Details.propTypes = {
+DetailsDrink.propTypes = {
   recipe: PropTypes.arrayOf(Object),
+  recommendations: PropTypes.arrayOf(Object),
+  history: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
-export default Details;
+export default DetailsDrink;

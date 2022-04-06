@@ -8,6 +8,7 @@ import RecipeSearchDrink from '../components/RecipeSearchDrink';
 import { getDrinksThunk } from '../Redux/actions/drinks';
 import { getDrinksCategoriesThunk } from '../Redux/actions/drinksCategories';
 import { fetchDrinksByCategory } from '../services/api';
+import '../css/Drinks.css';
 
 const LIMIT_DRINKS = 12;
 const LIMIT_CATEGORIES = 5;
@@ -67,20 +68,22 @@ const Drinks = () => {
 
   return (
     <Layout title="Drinks">
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ () => buttonAll() }
-      >
-        All
-      </button>
-      <div>
+      <div className="categories-drinks">
+        <button
+          type="button"
+          className="categories"
+          data-testid="All-category-filter"
+          onClick={ () => buttonAll() }
+        >
+          All
+        </button>
         {
           isFetchingCategories ? <Loading />
             : drinkCategories.map((category) => (
               <span key={ category.strCategory }>
                 <button
                   type="button"
+                  className="categories"
                   data-testid={ `${category.strCategory}-category-filter` }
                   onClick={ () => buttonOfCategories(category.strCategory) }
                 >
@@ -90,10 +93,15 @@ const Drinks = () => {
         }
       </div>
       {isFetchingDrinks && <Loading />}
-      {
-        !twelveSearched && !twelveByIngredients
+      <div className="container-drinks">
+        {
+          !twelveSearched && !twelveByIngredients
           && twelveDrinks.map((drink, index) => (
-            <Link key={ drink.idDrink } to={ `/drinks/${drink.idDrink}` }>
+            <Link
+              className="link-card-drinks"
+              key={ drink.idDrink }
+              to={ `/drinks/${drink.idDrink}` }
+            >
               <Card
                 index={ index }
                 image={ drink.strDrinkThumb }
@@ -101,17 +109,18 @@ const Drinks = () => {
               />
             </Link>
           ))
-      }
-      {
+        }
+        {
         /* TODO -> pensar sobre reutilizar o componente de Card
         não é necessário o uso deste componente RecipeSearchDrink */
-        (twelveSearched || twelveByIngredients)
+          (twelveSearched || twelveByIngredients)
           && (
             <RecipeSearchDrink
               recipes={ twelveSearched || twelveByIngredients }
             />
           )
-      }
+        }
+      </div>
     </Layout>
   );
 };

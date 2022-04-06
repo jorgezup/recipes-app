@@ -1,0 +1,32 @@
+.container-foods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 20px 0 70px;
+}
+
+.link-card-foods {
+  color: black;
+  font-family: Myriad Pro , serif;
+  text-decoration: none;
+}
+
+.categories-foods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.categories {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px -4px black;
+  margin: 10px;
+  padding: 8px;
+  width: 100px;
+}
+
+.categories:hover {
+  box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
+}

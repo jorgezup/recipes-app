@@ -5,6 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchHeader from './SearchHeader';
 import Title from './Title';
+import '../css/Header.css';
 
 const Header = ({ title }) => {
   const history = useHistory();
@@ -35,17 +36,15 @@ const Header = ({ title }) => {
   }, [pathname]);
 
   return (
-    <>
-      <header
-        style={ {
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          height: '70px',
-        } }
-      >
-        <button type="button" onClick={ () => history.push('/profile') }>
+    <div className="header">
+      <header>
+        <button
+          className="profile"
+          type="button"
+          onClick={ () => history.push('/profile') }
+        >
           <img
+            className="profile-svg"
             src={ profileIcon }
             alt="Profile Icon"
             data-testid="profile-top-btn"
@@ -53,7 +52,7 @@ const Header = ({ title }) => {
         </button>
         <Title>{title}</Title>
         {showSearchIcon && (
-          <button type="button" onClick={ toggleSearchHeader }>
+          <button className="search" type="button" onClick={ toggleSearchHeader }>
             <img
               src={ searchIcon }
               alt="Search Icon"
@@ -62,10 +61,11 @@ const Header = ({ title }) => {
           </button>
         )}
       </header>
+      <div className="margin" />
       {
         isSearchHeaderOpen && <SearchHeader />
       }
-    </>
+    </div>
   );
 };
 
