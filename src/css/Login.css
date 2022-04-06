@@ -5,7 +5,7 @@
 
 .login-container {
   align-items: center;
-  background-image: url('../images/background1.png');
+  background-image: url('../images/tela-login.png');
   display: flex;
   flex-direction: column;
   height: 640px;
@@ -20,20 +20,20 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  height: 250px;
-  margin-top: 290px;
+  height: 220px;
+  margin-top: 400px;
   width: 300px;
 }
 
 .login-form input {
   background: none;
   border: none;
-  border-bottom: 1px solid rgb(167, 108, 0);
+  border-bottom: 1px solid rgb(255, 102, 0);
   color: black;
   font-size: 15px;
   font-weight: 800;
   margin: 5px;
-  padding: 8px;
+  padding: 5px;
   text-align: center;
 }
 
@@ -44,11 +44,11 @@
 }
 
 .login-form label {
-  color: rgb(126, 125, 125);
+  color: rgb(36, 36, 36);
   display: flex;
   flex-direction: column;
   font-family: Quicksand , sans-serif;
-  margin: 15px 20px;
+  margin: 10px 20px;
 }
 
 .submit {
