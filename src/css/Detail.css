@@ -61,7 +61,7 @@
 }
 
 .recipe ul {
-  margin: 30px;
+  margin: 10px 20px 20px;
 }
 
 .recipe p {
@@ -72,6 +72,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  width: 360px;
 }
 
 .share-favorite {
