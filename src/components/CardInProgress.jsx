@@ -14,6 +14,7 @@ import {
   removeRecipeFromFavorite,
   setRecipesInFavorite,
 } from '../services/localStorage/favoriteRecipes';
+import '../css/InProgress.css';
 
 const CardInProgress = ({ recipe }) => {
   const history = useHistory();
@@ -84,48 +85,77 @@ const CardInProgress = ({ recipe }) => {
   const { meals: local } = getRecipesInProgress();
 
   return (
-    <div style={ { width: '360px' } }>
-      <h3 data-testid="recipe-title">{recipe.title}</h3>
-      <img
-        data-testid="recipe-photo"
-        src={ recipe.image }
-        alt=""
-        style={ { width: '100%' } }
-      />
-      <p data-testid="recipe-category">{recipe.category}</p>
-      <ul>
-        {recipe.ingredients.map((ingredient, index) => (
-          <li key={ index } data-testid={ `${index}-ingredient-step` }>
-            <label htmlFor={ ingredient }>
-              <input
-                type="checkbox"
-                name={ ingredient }
-                id={ ingredient }
-                checked={ local[recipe.id]?.includes(ingredient) }
-                onChange={ () => handleCheckIngredient(recipe.id, ingredient) }
-              />
-              {ingredient}
-            </label>
-          </li>
-        ))}
-      </ul>
-      <p data-testid="instructions">{recipe.instructions}</p>
-      <button type="button" onClick={ handleShare }>
-        <img src={ shareIcon } data-testid="share-btn" alt="icon-share" />
-      </button>
-      {
-        isRecipeShared && <span>Link copied!</span>
-      }
-      <button type="button" onClick={ handleFavorite }>
+    <div className="in-progress-container">
+      <h3
+        className="recipe-title"
+        data-testid="recipe-title"
+      >
+        {recipe.title}
+
+      </h3>
+      <div className="img-shadow">
         <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? blackHeart : whiteHeart }
-          alt="icon-favorite"
+          data-testid="recipe-photo"
+          src={ recipe.image }
+          alt=""
+          className="recipe-photo-progress"
         />
-      </button>
+      </div>
+      <p
+        className="recipe-category"
+        data-testid="recipe-category"
+      >
+        {recipe.category}
+
+      </p>
+      <div className="ingredients-container">
+        <ul className="list">
+          {recipe.ingredients.map((ingredient, index) => (
+            <li
+              className="ingredient"
+              key={ index }
+              data-testid={ `${index}-ingredient-step` }
+            >
+              <label htmlFor={ ingredient }>
+                <input
+                  type="checkbox"
+                  name={ ingredient }
+                  id={ ingredient }
+                  checked={ local[recipe.id]?.includes(ingredient) }
+                  onChange={ () => handleCheckIngredient(recipe.id, ingredient) }
+                />
+                {ingredient}
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <p
+        className="instructions"
+        data-testid="instructions"
+      >
+        {recipe.instructions}
+
+      </p>
+      <div className="share-favorites">
+        <button type="button" onClick={ handleShare }>
+          <img src={ shareIcon } data-testid="share-btn" alt="icon-share" />
+        </button>
+        {
+          isRecipeShared && <span>Link copied!</span>
+        }
+        <button type="button" onClick={ handleFavorite }>
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? blackHeart : whiteHeart }
+            alt="icon-favorite"
+          />
+        </button>
+      </div>
       <button
         data-testid="finish-recipe-btn"
         type="button"
+        className="finish-btn"
         disabled={
           isRecipeAlreadyFinished() < recipe.ingredients.length
         }

@@ -8,7 +8,9 @@
   height: 170px;
   justify-content: center;
   margin-bottom: 20px;
-  width: 144px;
+  overflow-y: auto;
+  padding: 10px;
+  width: 134px;
 }
 
 .card-foods:hover {
@@ -19,10 +21,15 @@
   font-family: Poppins , sans-serif;
   font-size: 15px;
   margin-top: 10px;
+  text-align: center;
 }
 
 .card-foods img {
   border-radius: 8px;
   margin-top: 15px;
   width: 80%;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
 }

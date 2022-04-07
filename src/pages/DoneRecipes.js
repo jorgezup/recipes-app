@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DoneFoods from '../components/DoneFoods';
 import DoneDrinks from '../components/DoneDrinks';
 import Layout from '../components/Layout';
+import '../css/DoneRecipes.css';
 
 function DoneRecipes() {
   const [recipeName, setRecipeName] = useState([]);
@@ -32,37 +33,44 @@ function DoneRecipes() {
 
   return (
     <Layout title="Done Recipes">
-      <button
-        name="All"
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ filterByType }
-      >
-        All
-      </button>
-      <button
-        name="Food"
-        type="button"
-        data-testid="filter-by-food-btn"
-        onClick={ filterByType }
-      >
-        Food
-      </button>
-      <button
-        name="Drinks"
-        type="button"
-        data-testid="filter-by-drink-btn"
-        onClick={ filterByType }
-      >
-        Drinks
-      </button>
-      {recipeName && recipeName.map((recipe, index) => (
-        <section key={ index }>
-          {recipe.type === 'food'
-            ? <DoneFoods recipe={ recipe } index={ index } />
-            : <DoneDrinks recipe={ recipe } index={ index } />}
-        </section>
-      ))}
+      <div className="container-filters">
+        <button
+          name="All"
+          type="button"
+          className="filter-done"
+          data-testid="filter-by-all-btn"
+          onClick={ filterByType }
+        >
+          All
+        </button>
+        <button
+          name="Food"
+          type="button"
+          className="filter-done"
+          data-testid="filter-by-food-btn"
+          onClick={ filterByType }
+        >
+          Food
+        </button>
+        <button
+          name="Drinks"
+          type="button"
+          className="filter-done"
+          data-testid="filter-by-drink-btn"
+          onClick={ filterByType }
+        >
+          Drinks
+        </button>
+      </div>
+      <div className="container-done">
+        {recipeName && recipeName.map((recipe, index) => (
+          <section className="cards-done" key={ index }>
+            {recipe.type === 'food'
+              ? <DoneFoods recipe={ recipe } index={ index } />
+              : <DoneDrinks recipe={ recipe } index={ index } />}
+          </section>
+        ))}
+      </div>
     </Layout>
   );
 }

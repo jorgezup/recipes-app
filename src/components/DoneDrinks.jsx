@@ -14,29 +14,50 @@ const DoneDrinks = ({ recipe, index }) => {
   };
 
   return (
-    <section key={ recipe.id }>
-      <Link to={ `/drinks/${recipe.id}` }>
+    <section className="done-recipe" key={ recipe.id }>
+      <Link className="done-card" to={ `/drinks/${recipe.id}` }>
+        <h2
+          className="name-done"
+          data-testid={ `${index}-horizontal-name` }
+        >
+          { recipe.name }
+
+        </h2>
         <img
           src={ recipe.image }
           alt={ recipe.name }
           data-testid={ `${index}-horizontal-image` }
           className="done-recipe-image"
         />
-        <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
       </Link>
-      <h3 data-testid={ `${index}-horizontal-top-text` }>{ recipe.alcoholicOrNot }</h3>
-      <p data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</p>
-      <button
-        type="button"
-        onClick={ () => clickCopyButton() }
-      >
-        <img
-          data-testid={ `${index}-horizontal-share-btn` }
-          src={ shareIcon }
-          alt="icon-share"
-        />
-      </button>
-      { isCopied && <p>Link copied!</p> }
+      <div className="info-done">
+        <h3
+          className="type-name"
+          data-testid={ `${index}-horizontal-top-text` }
+        >
+          { recipe.alcoholicOrNot }
+
+        </h3>
+        <p
+          className="type-name"
+          data-testid={ `${index}-horizontal-done-date` }
+        >
+          { recipe.doneDate }
+
+        </p>
+        { isCopied && <p>Link copied!</p> }
+        <button
+          type="button"
+          className="share"
+          onClick={ () => clickCopyButton() }
+        >
+          <img
+            data-testid={ `${index}-horizontal-share-btn` }
+            src={ shareIcon }
+            alt="icon-share"
+          />
+        </button>
+      </div>
     </section>
   );
 };
