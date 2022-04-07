@@ -47,7 +47,7 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
     const getFavorites = getFavoritesLocal()
       .some((favorite) => favorite.id.includes(recipe.idMeal));
     setFavorites(getFavorites);
-  }, []);
+  }, [recipe.idMeal]);
 
   const inProgressRecipes = () => {
     recipeStarted = ({
