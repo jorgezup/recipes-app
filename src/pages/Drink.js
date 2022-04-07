@@ -45,7 +45,6 @@ const Drink = () => {
       name: objDrink.strDrink,
       alcoholic: objDrink.strAlcoholic,
     };
-    console.log(drinkObj);
     setDrink(drinkObj);
   }, [id]);
 

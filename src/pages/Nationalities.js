@@ -41,7 +41,6 @@ const Nationalities = () => {
     }
     const response = await fetch(url);
     const { meals } = await response.json();
-    console.log(meals);
     if (meals.length < limitFood) {
       limitFood = meals.length;
     } else {

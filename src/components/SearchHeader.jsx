@@ -33,7 +33,7 @@ const SearchHeader = () => {
         radio,
         isClicked,
       }));
-      console.log(location.pathname);
+
       if (location.pathname === '/drinks') {
         dispatch(drinkSearchAPI(searchRecipe, radio, location.pathname));
       } else {
