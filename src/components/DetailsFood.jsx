@@ -19,9 +19,11 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
   const [buttonShare, setButtonShare] = useState(false);
   const [favorites, setFavorites] = useState(false);
 
+  /*
   const handleClickCardRecomendation = (id) => {
     history.push(`/drinks/${id}`);
   };
+  */
 
   const sendDoneRecipe = () => {
     const doneRecipes = [{
@@ -37,7 +39,7 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
     }];
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
   };
-  
+
   const getFavoritesLocal = () => JSON.parse(localStorage.getItem('favoriteRecipes'))
   || [];
 
