@@ -4,24 +4,76 @@
   border-radius: 10px;
   box-shadow: 4px 4px 8px -4px black;
   display: flex;
-  height: 170px;
-  justify-content: center;
+  flex-direction: column;
+  height: 160px;
   margin-bottom: 20px;
-  width: 350px;
+  width: 300px;
+}
+
+.cards {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .favorites-card {
+  align-items: center;
+  color: black;
   display: flex;
-  justify-content: space-around;
+  margin-top: 10px;
+  text-decoration: none;
 }
 
 .img-favorites {
   border-radius: 8px;
-  height: 130px;
-  width: 130px;
+  height: 100px;
+  margin: 0 30px;
+  width: 100px;
 }
 
-/* .type-name {
+.type-name {
   display: flex;
   flex-direction: column;
-} */
+  font-size: 14px;
+  justify-content: space-evenly;
+}
+
+.name-favorites {
+  margin-top: 10px;
+}
+
+.share-favorites {
+  margin-top: 10px;
+}
+
+.share-favorites button {
+  margin: 0 5px;
+}
+
+.icon {
+  height: 25px;
+  margin: 0 5px;
+  width: 25px;
+}
+
+.container-favorites:hover, .share-favorites button:hover {
+  box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
+}
+
+.filter-favorites {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px -4px black;
+  font-family: Poppins , sans-serif;
+  font-size: 20px;
+  margin: 0 10px 30px;
+  width: 100px;
+}
+
+.filter-favorites:hover {
+  box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
+}
+
+.container-filters {
+  display: flex;
+}

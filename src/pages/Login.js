@@ -48,36 +48,38 @@ class Login extends React.Component {
         const { email, enabledEmail, enabledPassword } = this.state;
         return (
           <div className="login-container">
-            <label htmlFor="input-email">
-              Email:
-              <input
-                onChange={ this.enabledEmail }
-                type="email"
-                className="email"
-                id="input-email"
-                data-testid="email-input"
-              />
-            </label>
-            <label htmlFor="input-password">
-              Senha:
-              <input
-                onChange={ this.enabledPassword }
-                type="password"
-                className="password"
-                id="input-password"
-                data-testid="password-input"
-              />
-            </label>
-            <button
-              type="button"
-              onClick={ () => this.handleClick(email) }
-              to="/foods"
-              className="submit"
-              disabled={ !(enabledEmail && enabledPassword) }
-              data-testid="login-submit-btn"
-            >
-              Entrar
-            </button>
+            <div className="login-form">
+              <label htmlFor="input-email">
+                Email:
+                <input
+                  onChange={ this.enabledEmail }
+                  type="email"
+                  className="email"
+                  id="input-email"
+                  data-testid="email-input"
+                />
+              </label>
+              <label htmlFor="input-password">
+                Senha:
+                <input
+                  onChange={ this.enabledPassword }
+                  type="password"
+                  className="password"
+                  id="input-password"
+                  data-testid="password-input"
+                />
+              </label>
+              <button
+                type="button"
+                onClick={ () => this.handleClick(email) }
+                to="/foods"
+                className="submit"
+                disabled={ !(enabledEmail && enabledPassword) }
+                data-testid="login-submit-btn"
+              >
+                Entrar
+              </button>
+            </div>
           </div>);
       }
 }

@@ -62,93 +62,103 @@ const Favorites = () => {
 
   return (
     <Layout title="Favorite Recipes">
-      <button
-        data-testid="filter-by-all-btn"
-        type="button"
-        onClick={ allFavoritesRecipes }
-      >
-        All
-      </button>
-      <button
-        data-testid="filter-by-food-btn"
-        type="button"
-        onClick={ favoritesFoods }
-      >
-        Foods
-      </button>
-      <button
-        data-testid="filter-by-drink-btn"
-        type="button"
-        onClick={ favoritesDrinks }
-      >
-        Drinks
-      </button>
-      {
-        favorites.map((favorite, index) => (
-          <div className="container-favorites" key={ favorite.id }>
-            <Link
-              className="favorites-card"
-              to={ `/${favorite.type}s/${favorite.id}` }
-            >
-              <img
-                data-testid={ `${index}-horizontal-image` }
-                className="img-favorites"
-                src={ favorite.image }
-                alt={ favorite.name }
-              />
-              <div className="type-name">
-                {
-                  favorite.nationality !== '' ? (
-                    <p
-                      className="type-favorites"
-                      data-testid={ `${index}-horizontal-top-text` }
-                    >
-                      {`${favorite.nationality} - ${favorite.category}`}
-                    </p>)
-                    : (
+      <div className="container-filters">
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          className="filter-favorites"
+          onClick={ allFavoritesRecipes }
+        >
+          All
+        </button>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          className="filter-favorites"
+          onClick={ favoritesFoods }
+        >
+          Foods
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          className="filter-favorites"
+          onClick={ favoritesDrinks }
+        >
+          Drinks
+        </button>
+      </div>
+      <div className="cards">
+        {
+          favorites.map((favorite, index) => (
+            <div className="container-favorites" key={ favorite.id }>
+              <Link
+                className="favorites-card"
+                to={ `/${favorite.type}s/${favorite.id}` }
+              >
+
+                <img
+                  data-testid={ `${index}-horizontal-image` }
+                  className="img-favorites"
+                  src={ favorite.image }
+                  alt={ favorite.name }
+                />
+                <div className="type-name">
+                  {
+                    favorite.nationality !== '' ? (
                       <p
                         className="type-favorites"
                         data-testid={ `${index}-horizontal-top-text` }
                       >
-                        {favorite.alcoholicOrNot}
+                        {`${favorite.nationality} - ${favorite.category}`}
                       </p>)
-                }
-                <h1
-                  className="name-favorites"
-                  data-testid={ `${index}-horizontal-name` }
+                      : (
+                        <p
+                          className="type-favorites"
+                          data-testid={ `${index}-horizontal-top-text` }
+                        >
+                          {favorite.alcoholicOrNot}
+                        </p>)
+                  }
+                  <h1
+                    className="name-favorites"
+                    data-testid={ `${index}-horizontal-name` }
+                  >
+                    {favorite.name}
+                  </h1>
+                </div>
+              </Link>
+              <div className="share-favorites">
+                <button
+                  type="button"
+                  onClick={ () => shareButton(favorite.id, favorite.type) }
                 >
-                  {favorite.name}
-                </h1>
+                  <img
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    src={ shareIcon }
+                    className="icon"
+                    alt="icon-share"
+                  />
+                </button>
+                {
+                  buttonShare.includes(favorite.id) && <span>Link copied!</span>
+                }
+                <button
+                  type="button"
+                  onClick={ () => favoriteButton(favorite.id, favorite.type) }
+                >
+                  <img
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    src={ blackHeart }
+                    className="icon"
+                    alt="icon-favorite"
+                  />
+                </button>
               </div>
-            </Link>
-            <div className="share-favorites">
-              <button
-                type="button"
-                onClick={ () => shareButton(favorite.id, favorite.type) }
-              >
-                <img
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  src={ shareIcon }
-                  alt="icon-share"
-                />
-              </button>
-              {
-                buttonShare.includes(favorite.id) && <span>Link copied!</span>
-              }
-              <button
-                type="button"
-                onClick={ () => favoriteButton(favorite.id, favorite.type) }
-              >
-                <img
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ blackHeart }
-                  alt="icon-favorite"
-                />
-              </button>
             </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
 
     </Layout>
   );
