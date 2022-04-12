@@ -14,27 +14,27 @@ const Header = ({ title }) => {
     location: { pathname },
   } = history;
 
-  const [showSearchIcon, setShowSearchIcon] = useState(false);
+  const [showSearchIcon, setShowSearchIcon] = useState(undefined);
   const [isSearchHeaderOpen, setSearchHeaderOpen] = useState(false);
 
   const toggleSearchHeader = () => {
     setSearchHeaderOpen(!isSearchHeaderOpen);
   };
 
-  useEffect(() => {
-    const getLocation = () => {
-      if (
-        pathname === '/foods'
+  const getLocation = () => {
+    if (
+      pathname === '/foods'
         || pathname === '/drinks'
         || pathname === '/explore/foods/nationalities'
-      ) {
-        setShowSearchIcon(true);
-      } else {
-        setShowSearchIcon(false);
-      }
-    };
-    getLocation();
-  }, [pathname]);
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  if (showSearchIcon === undefined) {
+    setShowSearchIcon(getLocation());
+  }
 
   return (
     <div className="header">
