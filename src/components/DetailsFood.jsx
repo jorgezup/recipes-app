@@ -6,9 +6,8 @@ import Loading from './Loading';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import backArrow from '../images/back.svg';
 import '../css/Detail.css';
-
-const data = new Date();
 
 let recipeStarted = {
   cocktails: {},
@@ -18,27 +17,6 @@ let recipeStarted = {
 const DetailsFood = ({ recipe, recommendations, history }) => {
   const [buttonShare, setButtonShare] = useState(false);
   const [favorites, setFavorites] = useState(false);
-
-  /*
-  const handleClickCardRecomendation = (id) => {
-    history.push(`/drinks/${id}`);
-  };
-  */
-
-  const sendDoneRecipe = () => {
-    const doneRecipes = [{
-      id: recipe.idMeal,
-      type: 'food',
-      nationality: recipe.strArea,
-      category: recipe.strCategory,
-      alcoholicOrNot: '',
-      name: recipe.name,
-      image: recipe.image,
-      doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-      tags: recipe.strTags?.split(','),
-    }];
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  };
 
   const getFavoritesLocal = () => JSON.parse(localStorage.getItem('favoriteRecipes'))
   || [];
@@ -60,7 +38,6 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
   };
 
   const clickStartRecipe = () => {
-    sendDoneRecipe();
     inProgressRecipes();
     history.push(`/foods/${recipe.idMeal}/in-progress`);
   };
@@ -98,7 +75,12 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
       {recipe ? (
         <div>
           <div className="details-container">
-            <h2 data-testid="recipe-title">{recipe.name}</h2>
+            <div className="container-title">
+              <Link to="/foods">
+                <img src={ backArrow } alt="back arrow" />
+              </Link>
+              <h2 data-testid="recipe-title">{recipe.name}</h2>
+            </div>
             <div className="img-shadow">
               <img
                 data-testid="recipe-photo"

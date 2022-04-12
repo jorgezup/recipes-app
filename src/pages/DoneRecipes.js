@@ -3,32 +3,34 @@ import DoneFoods from '../components/DoneFoods';
 import DoneDrinks from '../components/DoneDrinks';
 import Layout from '../components/Layout';
 import '../css/DoneRecipes.css';
+import { getFromLocalStorage } from '../services/localStorage/doneRecipes';
 
 function DoneRecipes() {
+  const [doneRecipesLocalStorage, setDoneRecipesLocalStorage] = useState([]);
   const [recipeName, setRecipeName] = useState([]);
 
   useEffect(() => {
-    const recipe = JSON.parse(localStorage.getItem('doneRecipes'));
-    setRecipeName(...recipeName, recipe);
+    const doneRecipesFromLocalStorage = getFromLocalStorage('doneRecipes');
+    setDoneRecipesLocalStorage(doneRecipesFromLocalStorage);
+    setRecipeName(doneRecipesFromLocalStorage);
   }, []);
 
-  const filterByType = ({ target }) => {
-    const { name } = target;
-    if (name === 'Food') {
-      const filteredFoods = recipeName.reduce((acc, curl) => {
-        if (curl.type === 'food') acc.push(curl);
-        return acc;
-      }, []);
-      setRecipeName(filteredFoods);
-    }
-    if (name === 'Drinks') {
-      const filteredDrinks = recipeName.reduce((acc, curl) => {
-        if (curl.type === 'drink') acc.push(curl);
-        return acc;
-      }, []);
-      setRecipeName(filteredDrinks);
-    }
-    if (name === 'All') setRecipeName(JSON.parse(localStorage.getItem('doneRecipes')));
+  const doneFoods = () => {
+    const doneFood = doneRecipesLocalStorage.filter((foodsDone) => (
+      foodsDone.type === 'food'
+    ));
+    setRecipeName(doneFood);
+  };
+
+  const doneDrinks = () => {
+    const doneDrink = doneRecipesLocalStorage.filter((drinksDone) => (
+      drinksDone.type === 'drink'
+    ));
+    setRecipeName(doneDrink);
+  };
+
+  const filterByType = () => {
+    setRecipeName(doneRecipesLocalStorage);
   };
 
   return (
@@ -48,7 +50,7 @@ function DoneRecipes() {
           type="button"
           className="filter-done"
           data-testid="filter-by-food-btn"
-          onClick={ filterByType }
+          onClick={ doneFoods }
         >
           Food
         </button>
@@ -57,7 +59,7 @@ function DoneRecipes() {
           type="button"
           className="filter-done"
           data-testid="filter-by-drink-btn"
-          onClick={ filterByType }
+          onClick={ doneDrinks }
         >
           Drinks
         </button>

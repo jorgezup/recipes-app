@@ -22,6 +22,18 @@
   box-shadow: inset 4px 4px 12px #c5c5c5 , inset -4px -4px 12px white;
 }
 
+.container-title {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 10px 270px;
+}
+
+.container-title img {
+  height: 42px;
+  width: 42px;
+}
+
 .recomendation-title {
   font-family: Poppins , sans-serif;
   font-size: 15px;

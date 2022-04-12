@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useHistory, Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import homeIcon from '../images/icons8-home.svg';
 import SearchHeader from './SearchHeader';
 import Title from './Title';
 import '../css/Header.css';
@@ -60,6 +61,17 @@ const Header = ({ title }) => {
             />
           </button>
         )}
+        {
+          !showSearchIcon && (
+            <Link to="/foods">
+              <img
+                src={ homeIcon }
+                alt="home"
+                style={ { width: '42px', height: '42px', fontWeight: '700' } }
+              />
+            </Link>
+          )
+        }
       </header>
       <div className="margin" />
       {
