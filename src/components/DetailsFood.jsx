@@ -6,6 +6,7 @@ import Loading from './Loading';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import backArrow from '../images/back.svg';
 import '../css/Detail.css';
 
 let recipeStarted = {
@@ -24,7 +25,7 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
     const getFavorites = getFavoritesLocal()
       .some((favorite) => favorite.id.includes(recipe.idMeal));
     setFavorites(getFavorites);
-  }, []);
+  }, [recipe.idMeal]);
 
   const inProgressRecipes = () => {
     recipeStarted = ({
@@ -74,7 +75,12 @@ const DetailsFood = ({ recipe, recommendations, history }) => {
       {recipe ? (
         <div>
           <div className="details-container">
-            <h2 data-testid="recipe-title">{recipe.name}</h2>
+            <div className="container-title">
+              <Link to="/foods">
+                <img src={ backArrow } alt="back arrow" />
+              </Link>
+              <h2 data-testid="recipe-title">{recipe.name}</h2>
+            </div>
             <div className="img-shadow">
               <img
                 data-testid="recipe-photo"

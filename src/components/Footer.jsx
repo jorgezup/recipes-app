@@ -31,14 +31,14 @@ const Footer = () => {
       <button
         type="button"
         className="explore"
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ () => history.push('/explore') }
       >
         <img src={ exploreIcon } alt="Explore Icon" data-testid="explore-bottom-btn" />
       </button>
       <button
         type="button"
         className="foods"
-        onClick={ () => history.push('/foods') }
+        onClick={ () => history.push('/done-recipes') }
       >
         <img className="done-recipes" src={ doneRecipe } alt="done Recipe Icon" />
       </button>

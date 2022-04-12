@@ -1,10 +1,12 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
-import React, { useEffect, useState } from 'react';
 import Loading from './Loading';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import backArrow from '../images/back.svg';
 import '../css/Detail.css';
 
 let recipeStarted = {
@@ -77,7 +79,12 @@ const DetailsDrink = ({ recipe, recommendations, history }) => {
     <div className="container">
       {recipe ? (
         <div className="details-container">
-          <h2 data-testid="recipe-title">{recipe.name}</h2>
+          <div className="container-title">
+            <Link to="/drinks">
+              <img src={ backArrow } alt="back arrow" />
+            </Link>
+            <h2 data-testid="recipe-title">{recipe.name}</h2>
+          </div>
           <div className="img-shadow">
             <img
               data-testid="recipe-photo"

@@ -14,7 +14,7 @@ import {
   removeRecipeFromFavorite,
   setRecipesInFavorite,
 } from '../services/localStorage/favoriteRecipes';
-import setDoneRecipes from '../services/localStorage/doneRecipes';
+import { setRecipesDone } from '../services/localStorage/doneRecipes';
 import '../css/InProgress.css';
 
 const data = new Date();
@@ -91,8 +91,7 @@ const CardInProgress = ({ recipe }) => {
       doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
       tags: recipe.strTags?.split(','),
     };
-    console.log(doneRecipes);
-    setDoneRecipes(doneRecipes);
+    setRecipesDone(doneRecipes);
   };
 
   const isRecipeAlreadyFinished = () => ingredientNames.length;

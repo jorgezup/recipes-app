@@ -3,33 +3,34 @@ import DoneFoods from '../components/DoneFoods';
 import DoneDrinks from '../components/DoneDrinks';
 import Layout from '../components/Layout';
 import '../css/DoneRecipes.css';
+import { getFromLocalStorage } from '../services/localStorage/doneRecipes';
 
 function DoneRecipes() {
+  const [doneRecipesLocalStorage, setDoneRecipesLocalStorage] = useState([]);
   const [recipeName, setRecipeName] = useState([]);
 
   useEffect(() => {
-    const recipe = JSON.parse(localStorage.getItem('doneRecipes'));
-    setRecipeName(...recipeName, recipe);
-  }, [recipeName]);
-
-  const getDoneRecipe = () => JSON.parse(localStorage.getItem('doneRecipes'));
+    const doneRecipesFromLocalStorage = getFromLocalStorage('doneRecipes');
+    setDoneRecipesLocalStorage(doneRecipesFromLocalStorage);
+    setRecipeName(doneRecipesFromLocalStorage);
+  }, []);
 
   const doneFoods = () => {
-    const doneFood = getDoneRecipe().filter((foodsDone) => (
+    const doneFood = doneRecipesLocalStorage.filter((foodsDone) => (
       foodsDone.type === 'food'
     ));
     setRecipeName(doneFood);
   };
 
   const doneDrinks = () => {
-    const doneDrink = getDoneRecipe().filter((drinksDone) => (
+    const doneDrink = doneRecipesLocalStorage.filter((drinksDone) => (
       drinksDone.type === 'drink'
     ));
     setRecipeName(doneDrink);
   };
 
   const filterByType = () => {
-    setRecipeName(JSON.parse(localStorage.getItem('doneRecipes')));
+    setRecipeName(doneRecipesLocalStorage);
   };
 
   return (
