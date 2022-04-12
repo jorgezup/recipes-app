@@ -23,15 +23,15 @@
 }
 
 .container-title {
-  display: grid;
-  grid-template-columns: 10px 270px;
-  gap: 10px;
   align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 10px 270px;
 }
 
 .container-title img {
-  width: 42px;
   height: 42px;
+  width: 42px;
 }
 
 .recomendation-title {
