@@ -12,3 +12,12 @@
   background: transparent;
   border: none;
 }
+
+.fav-icon {
+  width: 38px;
+}
+
+.done-recipes {
+  height: 40px;
+  margin-top: 2px;
+}

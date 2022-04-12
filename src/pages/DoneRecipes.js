@@ -12,23 +12,24 @@ function DoneRecipes() {
     setRecipeName(...recipeName, recipe);
   }, []);
 
-  const filterByType = ({ target }) => {
-    const { name } = target;
-    if (name === 'Food') {
-      const filteredFoods = recipeName.reduce((acc, curl) => {
-        if (curl.type === 'food') acc.push(curl);
-        return acc;
-      }, []);
-      setRecipeName(filteredFoods);
-    }
-    if (name === 'Drinks') {
-      const filteredDrinks = recipeName.reduce((acc, curl) => {
-        if (curl.type === 'drink') acc.push(curl);
-        return acc;
-      }, []);
-      setRecipeName(filteredDrinks);
-    }
-    if (name === 'All') setRecipeName(JSON.parse(localStorage.getItem('doneRecipes')));
+  const getDoneRecipe = () => JSON.parse(localStorage.getItem('doneRecipes'));
+
+  const doneFoods = () => {
+    const doneFood = getDoneRecipe().filter((foodsDone) => (
+      foodsDone.type === 'food'
+    ));
+    setRecipeName(doneFood);
+  };
+
+  const doneDrinks = () => {
+    const doneDrink = getDoneRecipe().filter((drinksDone) => (
+      drinksDone.type === 'drink'
+    ));
+    setRecipeName(doneDrink);
+  };
+
+  const filterByType = () => {
+    setRecipeName(JSON.parse(localStorage.getItem('doneRecipes')));
   };
 
   return (
@@ -48,7 +49,7 @@ function DoneRecipes() {
           type="button"
           className="filter-done"
           data-testid="filter-by-food-btn"
-          onClick={ filterByType }
+          onClick={ doneFoods }
         >
           Food
         </button>
@@ -57,7 +58,7 @@ function DoneRecipes() {
           type="button"
           className="filter-done"
           data-testid="filter-by-drink-btn"
-          onClick={ filterByType }
+          onClick={ doneDrinks }
         >
           Drinks
         </button>

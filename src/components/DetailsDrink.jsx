@@ -7,8 +7,6 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import '../css/Detail.css';
 
-const data = new Date();
-
 let recipeStarted = {
   cocktails: {},
   meals: {},
@@ -19,22 +17,6 @@ const DetailsDrink = ({ recipe, recommendations, history }) => {
   const [favorites, setFavorites] = useState(false);
   const handleClickCardRecomendation = (id) => {
     history.push(`/foods/${id}`);
-  };
-
-  const sendDoneRecipe = () => {
-    console.log(recipe);
-    const doneRecipes = [{
-      id: recipe.idDrink,
-      type: 'drink',
-      nationality: '',
-      category: recipe.strCategory,
-      alcoholicOrNot: recipe.alcoholic,
-      name: recipe.name,
-      image: recipe.image,
-      doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
-      tags: recipe.strTags?.split(','),
-    }];
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
   };
 
   const getFavoritesLocal = () => JSON.parse(localStorage.getItem('favoriteRecipes'))
@@ -59,7 +41,6 @@ const DetailsDrink = ({ recipe, recommendations, history }) => {
   };
 
   const clickStartRecipe = () => {
-    sendDoneRecipe();
     inProgressRecipes();
     history.push(`/drinks/${recipe.idDrink}/in-progress`);
   };

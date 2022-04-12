@@ -14,7 +14,10 @@ import {
   removeRecipeFromFavorite,
   setRecipesInFavorite,
 } from '../services/localStorage/favoriteRecipes';
+import setDoneRecipes from '../services/localStorage/doneRecipes';
 import '../css/InProgress.css';
+
+const data = new Date();
 
 const CardInProgress = ({ recipe }) => {
   const history = useHistory();
@@ -76,9 +79,26 @@ const CardInProgress = ({ recipe }) => {
     }
   };
 
+  const sendDoneRecipe = () => {
+    const doneRecipes = {
+      id: recipe.id,
+      type: path === 'foods' ? 'food' : 'drink',
+      nationality: recipe.nationality,
+      category: recipe.category,
+      alcoholicOrNot: '',
+      name: recipe.title,
+      image: recipe.image,
+      doneDate: `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`,
+      tags: recipe.strTags?.split(','),
+    };
+    console.log(doneRecipes);
+    setDoneRecipes(doneRecipes);
+  };
+
   const isRecipeAlreadyFinished = () => ingredientNames.length;
 
   const handleFinishButton = () => {
+    sendDoneRecipe();
     history.push('/done-recipes');
   };
 

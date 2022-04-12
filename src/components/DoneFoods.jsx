@@ -46,7 +46,7 @@ const DoneFoods = ({ recipe, index }) => {
           { recipe.doneDate }
 
         </p>
-        {recipe.tags.map((tag) => (
+        {recipe.tags && recipe.tags.map((tag) => (
           <p
             className="type-name"
             key={ tag }
