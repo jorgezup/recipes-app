@@ -226,3 +226,8 @@ As rotas a serem utilizadas na aplicação devem ser as seguintes:
 Deploy da aplicação utilizando o <strong>Surge</strong>.
 
 http://real-tasty.surge.sh/
+
+![Screenshot from 2022-05-02 22-42-07](https://user-images.githubusercontent.com/42441349/166397815-28a3953e-7d53-4965-ad17-18f196870afb.png)
+
+
+
